@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">DashClock Birthday</string>
+    <string name="extension_title">Birthday</string>
+    <string name="extension_description">Display a reminder for your contact birthdays</string>
+    <string name="settings_title">DashClock Birthday Settings</string>
+
+    <string name="title_format">%1$s\'s birthday</string>
+    <string name="age_format">%1$s years old</string>
+    <string name="when_days_format">in %1$d days</string>
+    <string name="when_today_format">today!</string>
+    <string name="when_tomorrow_format">tomorrow</string>
+</resources>
