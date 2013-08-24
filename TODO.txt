@@ -1,0 +1,2 @@
+- Use Proguard to reduce apk size
+- Contact groups setting
