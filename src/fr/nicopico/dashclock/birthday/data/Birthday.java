@@ -56,7 +56,7 @@ public class Birthday implements Comparable<Birthday> {
 
     @Override
     public int compareTo(Birthday another) {
-        if (Math.signum(this.birthdayDate.compareTo(TODAY)) == Math.signum(another.birthdayDate.compareTo(TODAY))) {
+        if (getSign(this.birthdayDate.compareTo(TODAY)) == getSign(another.birthdayDate.compareTo(TODAY))) {
             int birthdayCompare = this.birthdayDate.compareTo(another.birthdayDate);
             if (birthdayCompare != 0) {
                 return birthdayCompare;
@@ -69,5 +69,15 @@ public class Birthday implements Comparable<Birthday> {
             // this.birthday has passed -> display it last
             return this.birthdayDate.isBefore(TODAY) ? 1 : -1;
         }
+    }
+
+    /***
+     * Get sign of value.
+     * Main difference with <pre>Math.signum()</pre> is that 0 will return +1 too.
+     * @param value integer
+     * @return +1 if value is >= 0, else return -1
+     */
+    private int getSign(int value) {
+        return value >= 0 ? 1 : -1;
     }
 }
