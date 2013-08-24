@@ -5,7 +5,6 @@ import fr.nicopico.dashclock.birthday.data.BirthdayRetriever;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.Days;
-import org.joda.time.ReadableInstant;
 
 import java.util.List;
 
@@ -55,9 +54,17 @@ public class BirthdayService extends DashClockExtension {
 
         if (birthdays.size() > 0) {
             Birthday birthday = birthdays.get(0);
-            ReadableInstant today = new DateTime();
+            DateTime today = new DateTime();
 
-            int days = Days.daysBetween(today, birthday.birthdayDate.toDateTime(today)).getDays();
+            DateTime birthdayEvent = birthday.birthdayDate.toDateTime(today);
+            int days;
+            if (birthdayEvent.isAfter(today)) {
+                days = Days.daysBetween(today, birthdayEvent).getDays();
+            }
+            else {
+                // Next birthday event is next year
+                days = Days.daysBetween(today, birthdayEvent.plusYears(1)).getDays();
+            }
             if (days > daysLimit) {
                 publishUpdate(new ExtensionData().visible(false));
                 return;
