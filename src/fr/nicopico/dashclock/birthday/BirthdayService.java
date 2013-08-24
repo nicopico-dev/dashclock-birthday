@@ -9,7 +9,9 @@ import org.joda.time.ReadableInstant;
 
 import java.util.List;
 
+import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.preference.PreferenceManager;
 import com.google.android.apps.dashclock.api.DashClockExtension;
 import com.google.android.apps.dashclock.api.ExtensionData;
 
@@ -19,12 +21,24 @@ import com.google.android.apps.dashclock.api.ExtensionData;
  */
 public class BirthdayService extends DashClockExtension {
 
+    public static final String PREF_DAYS_LIMIT_KEY = "pref_days_limit";
+
     private BirthdayRetriever birthdayRetriever;
+    private int daysLimit;
 
     @Override
     protected void onInitialize(boolean isReconnect) {
         super.onInitialize(isReconnect);
         birthdayRetriever = new BirthdayRetriever();
+        updatePreferences();
+    }
+
+    @SuppressWarnings("ConstantConditions")
+    private void updatePreferences() {
+        final SharedPreferences sharedPreferences =
+                PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+
+        daysLimit = Integer.valueOf(sharedPreferences.getString(PREF_DAYS_LIMIT_KEY, "7"));
     }
 
     @Override
@@ -32,9 +46,19 @@ public class BirthdayService extends DashClockExtension {
         final List<Birthday> birthdays = birthdayRetriever.getContactWithBirthdays(getApplicationContext());
         final Resources res = getResources();
 
+        if (reason == UPDATE_REASON_SETTINGS_CHANGED) {
+            updatePreferences();
+        }
+
         if (birthdays.size() > 0) {
             Birthday birthday = birthdays.get(0);
             ReadableInstant today = new DateTime();
+
+            int days = Days.daysBetween(today, birthday.birthdayDate.toDateTime(today)).getDays();
+            if (days > daysLimit) {
+                publishUpdate(new ExtensionData().visible(false));
+                return;
+            }
 
             StringBuilder body = new StringBuilder();
 
@@ -45,8 +69,7 @@ public class BirthdayService extends DashClockExtension {
                 body.append(' ');
             }
 
-            // In how many days
-            int days = Days.daysBetween(today, birthday.birthdayDate.toDateTime(today)).getDays();
+            // When
             int daysFormatResId;
             switch (days) {
             case 0:

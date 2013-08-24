@@ -10,4 +10,11 @@
     <string name="when_days_format">in %1$d days</string>
     <string name="when_today_format">today!</string>
     <string name="when_tomorrow_format">tomorrow</string>
+
+    <string name="pref_days_limit_title">Days limit</string>
+    <string name="pref_days_limit_0_summary_format">Notify birthdays for the same day</string>
+    <plurals name="pref_days_limit_summary_format">
+        <item quantity="one">Notify birthdays for the next %1$s day</item>
+        <item quantity="other">Notify birthdays for the next %1$s days</item>
+    </plurals>
 </resources>
