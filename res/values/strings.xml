@@ -14,7 +14,7 @@
     <string name="pref_days_limit_title">Days limit</string>
     <string name="pref_days_limit_0_summary_format">Notify birthdays for the same day</string>
     <plurals name="pref_days_limit_summary_format">
-        <item quantity="one">Notify birthdays for the next %1$s day</item>
+        <item quantity="one">Notify birthdays for the next day</item>
         <item quantity="other">Notify birthdays for the next %1$s days</item>
     </plurals>
 </resources>
