@@ -9,9 +9,12 @@ import org.joda.time.ReadableInstant;
 
 import java.util.List;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.net.Uri;
 import android.preference.PreferenceManager;
+import android.provider.ContactsContract;
 import com.google.android.apps.dashclock.api.DashClockExtension;
 import com.google.android.apps.dashclock.api.ExtensionData;
 
@@ -83,6 +86,13 @@ public class BirthdayService extends DashClockExtension {
             }
             body.append(res.getString(daysFormatResId, days));
 
+            // Open contact info on click
+            Intent contactIntent = new Intent(Intent.ACTION_VIEW);
+            //noinspection ConstantConditions
+            contactIntent.setData(Uri.withAppendedPath(
+                    ContactsContract.Contacts.CONTENT_URI, String.valueOf(birthday.contactId)
+            ));
+
             // Display message
             publishUpdate(
                     new ExtensionData()
@@ -90,6 +100,7 @@ public class BirthdayService extends DashClockExtension {
                             .icon(R.drawable.white_icon)
                             .status(res.getString(R.string.title_format, birthday.displayName))
                             .expandedBody(body.toString())
+                            .clickIntent(contactIntent)
             );
         }
         else {
