@@ -104,7 +104,7 @@ public class BirthdayService extends DashClockExtension {
             publishUpdate(
                     new ExtensionData()
                             .visible(true)
-                            .icon(R.drawable.white_icon)
+                            .icon(R.drawable.ic_extension_white)
                             .status(res.getString(R.string.title_format, birthday.displayName))
                             .expandedBody(body.toString())
                             .clickIntent(contactIntent)

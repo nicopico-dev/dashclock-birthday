@@ -18,7 +18,7 @@ public class SettingsActivity extends PreferenceActivity {
         super.onCreate(savedInstanceState);
         ActionBar actionBar = getActionBar();
         if (actionBar != null) {
-            actionBar.setIcon(R.drawable.white_icon);
+            actionBar.setIcon(R.drawable.ic_extension_white);
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
     }
