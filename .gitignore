@@ -3,3 +3,4 @@ gen/
 out/
 project.properties
 *.iml
+*.apk
