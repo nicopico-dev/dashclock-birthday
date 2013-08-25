@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.preference.PreferenceManager;
+import android.provider.ContactsContract;
 import com.google.android.apps.dashclock.api.DashClockExtension;
 import com.google.android.apps.dashclock.api.ExtensionData;
 
@@ -31,6 +32,12 @@ public class BirthdayService extends DashClockExtension {
         super.onInitialize(isReconnect);
         birthdayRetriever = new BirthdayRetriever();
         updatePreferences();
+
+        // Listen for contact update
+        //noinspection ConstantConditions
+        addWatchContentUris(new String[] {
+                ContactsContract.Contacts.CONTENT_URI.toString()
+        });
     }
 
     @SuppressWarnings("ConstantConditions")
