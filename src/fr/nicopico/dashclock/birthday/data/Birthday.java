@@ -13,6 +13,7 @@ import android.provider.ContactsContract;
 */
 public class Birthday implements Comparable<Birthday> {
     public final long contactId;
+    public final String lookupKey;
     public final String displayName;
     public String uriPhoto;
     public String uriThumbnail;
@@ -41,11 +42,13 @@ public class Birthday implements Comparable<Birthday> {
 
         try {
             if (c != null && c.moveToFirst()) {
+                this.lookupKey = c.getString(0);
                 this.displayName = c.getString(1);
                 this.uriPhoto = c.getString(2);
                 this.uriThumbnail = c.getString(3);
             }
             else {
+                this.lookupKey = "0";
                 this.displayName = "[UNKNOWN]";
             }
         }

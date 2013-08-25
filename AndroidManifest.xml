@@ -34,6 +34,12 @@
             android:label="@string/settings_title"
             android:exported="true"/>
 
+        <activity
+            android:name=".QuickContactProxy"
+            android:exported="true"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@android:style/Theme.Holo.Wallpaper.NoTitleBar"/>
+
     </application>
 
 </manifest>
