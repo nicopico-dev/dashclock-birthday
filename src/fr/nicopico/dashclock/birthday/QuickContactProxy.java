@@ -29,7 +29,9 @@ public class QuickContactProxy extends Activity {
      * @return Intent for the QuickContact
      */
     public static Intent buildIntent(Context context, String lookupKey) {
-        return new Intent(context, QuickContactProxy.class).putExtra(EXTRA_CONTACT_ID, lookupKey);
+        return new Intent(context, QuickContactProxy.class)
+                .addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY|Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS)
+                .putExtra(EXTRA_CONTACT_ID, lookupKey);
     }
 
     @Override
