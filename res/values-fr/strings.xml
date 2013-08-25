@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">DashClock Birthday</string>
     <string name="extension_title">Anniversaire</string>
     <string name="extension_description">Affiche un rappel pour l\'anniversaire de vos contacts</string>
     <string name="settings_title">Paramètres de DashClock Birthday</string>

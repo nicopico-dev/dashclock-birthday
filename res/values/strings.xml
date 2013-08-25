@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">DashClock Birthday</string>
+    <string name="app_name">DashClock Birthday Extension</string>
+
     <string name="extension_title">Birthday</string>
     <string name="extension_description">Display a reminder for your contact birthdays</string>
     <string name="settings_title">DashClock Birthday Settings</string>

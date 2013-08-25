@@ -105,7 +105,8 @@ public class BirthdayService extends DashClockExtension {
                     new ExtensionData()
                             .visible(true)
                             .icon(R.drawable.ic_extension_white)
-                            .status(res.getString(R.string.title_format, birthday.displayName))
+                            .status(birthday.displayName)
+                            .expandedTitle(res.getString(R.string.title_format, birthday.displayName))
                             .expandedBody(body.toString())
                             .clickIntent(contactIntent)
             );
