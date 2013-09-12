@@ -75,6 +75,17 @@ public class Birthday implements Comparable<Birthday> {
 
     @Override
     public int compareTo(Birthday another) {
+        // Failsafe (null birthdayDate shouldn't happen)
+        if (this.birthdayDate == null && another.birthdayDate == null) {
+            return 0;
+        }
+        else if (this.birthdayDate == null) {
+            return -1;
+        }
+        else if (another.birthdayDate == null) {
+            return 1;
+        }
+
         if (getSign(this.birthdayDate.compareTo(TODAY)) == getSign(another.birthdayDate.compareTo(TODAY))) {
             int birthdayCompare = this.birthdayDate.compareTo(another.birthdayDate);
             if (birthdayCompare != 0) {

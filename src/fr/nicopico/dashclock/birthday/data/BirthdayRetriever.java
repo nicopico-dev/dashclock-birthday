@@ -71,8 +71,10 @@ public class BirthdayRetriever {
 
         List<Birthday> result = new ArrayList<Birthday>(c != null ? c.getCount() : 0);
         try {
+            Birthday birthday;
             while (c != null && c.moveToNext()) {
-                result.add(buildBirthday(contentResolver, c));
+                birthday = buildBirthday(contentResolver, c);
+                if (birthday != null) result.add(birthday);
             }
         }
         finally {
@@ -84,11 +86,11 @@ public class BirthdayRetriever {
     }
 
     private Birthday buildBirthday(ContentResolver contentResolver, Cursor c) {
-        Birthday contact = new Birthday(contentResolver, c.getLong(0));
-
         // Analyze birthday string
         Matcher regexMatcher = regexDate.matcher(c.getString(1));
+
         if (regexMatcher.find()) {
+            Birthday contact = new Birthday(contentResolver, c.getLong(0));
             contact.birthdayDate = new MonthDay(
                     Integer.parseInt(regexMatcher.group(2)),
                     Integer.parseInt(regexMatcher.group(3))
@@ -98,9 +100,11 @@ public class BirthdayRetriever {
                 contact.year = Integer.parseInt(regexMatcher.group(1));
                 contact.unknownYear = false;
             }
+
+            return contact;
         }
 
-        return contact;
+        return null;
     }
 
 }
