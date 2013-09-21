@@ -16,4 +16,8 @@
         <item quantity="one">Affiche les anniversaires pour le prochain jour</item>
         <item quantity="other">Affiche les anniversaires pour les %1$s prochains jours</item>
     </plurals>
+
+    <string name="pref_show_quickcontact">QuickContact</string>
+    <string name="pref_show_quickcontact_on">Affiche la fenêtre QuickContact au toucher</string>
+    <string name="pref_show_quickcontact_off">Affiche l\'application Contacts au toucher</string>
 </resources>

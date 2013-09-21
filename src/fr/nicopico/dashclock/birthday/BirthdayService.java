@@ -27,6 +27,7 @@ import java.util.List;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
 import com.google.android.apps.dashclock.api.DashClockExtension;
@@ -39,9 +40,11 @@ import com.google.android.apps.dashclock.api.ExtensionData;
 public class BirthdayService extends DashClockExtension {
 
     public static final String PREF_DAYS_LIMIT_KEY = "pref_days_limit";
+    public static final String PREF_SHOW_QUICK_CONTACT = "pref_show_quickcontact";
 
     private BirthdayRetriever birthdayRetriever;
     private int daysLimit;
+    private boolean showQuickContact;
 
     @Override
     protected void onInitialize(boolean isReconnect) {
@@ -62,6 +65,7 @@ public class BirthdayService extends DashClockExtension {
                 PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
         daysLimit = Integer.valueOf(sharedPreferences.getString(PREF_DAYS_LIMIT_KEY, "7"));
+        showQuickContact = sharedPreferences.getBoolean(PREF_SHOW_QUICK_CONTACT, true);
     }
 
     @Override
@@ -114,8 +118,19 @@ public class BirthdayService extends DashClockExtension {
             }
             body.append(res.getString(daysFormatResId, days));
 
-            // Open QuickContact dialog on click
-            Intent contactIntent = QuickContactProxy.buildIntent(getApplicationContext(), birthday.lookupKey);
+            // Click action
+            Intent contactIntent;
+            if (showQuickContact) {
+                // Open QuickContact dialog on click
+                contactIntent = QuickContactProxy.buildIntent(getApplicationContext(), birthday.lookupKey);
+            }
+            else {
+                contactIntent = new Intent(Intent.ACTION_VIEW);
+                //noinspection ConstantConditions
+                contactIntent.setData(
+                        Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_URI, String.valueOf(birthday.contactId))
+                );
+            }
 
             // Display message
             publishUpdate(

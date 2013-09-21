@@ -12,4 +12,11 @@
         android:singleLine="true"
         android:maxLines="1"/>
 
+    <CheckBoxPreference
+        android:key="pref_show_quickcontact"
+        android:title="@string/pref_show_quickcontact"
+        android:defaultValue="true"
+        android:summaryOn="@string/pref_show_quickcontact_on"
+        android:summaryOff="@string/pref_show_quickcontact_off"/>
+
 </PreferenceScreen>

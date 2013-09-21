@@ -94,7 +94,7 @@ public class SettingsActivity extends PreferenceActivity {
             }
             else if (BirthdayService.PREF_DAYS_LIMIT_KEY.equals(preference.getKey())) {
                 final Resources res = preference.getContext().getResources();
-                final Integer intValue = Integer.valueOf((String) value);
+                final Integer intValue = Integer.valueOf(stringValue);
 
                 String summary;
                 if (intValue == 0) {
