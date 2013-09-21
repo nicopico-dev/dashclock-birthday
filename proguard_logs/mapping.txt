@@ -13,6 +13,7 @@ com.google.android.apps.dashclock.api.DashClockExtension -> com.google.android.a
     void onInitialize(boolean) -> a
     void onUpdateData(int) -> a
     void publishUpdate(com.google.android.apps.dashclock.api.ExtensionData) -> a
+    void addWatchContentUris(java.lang.String[]) -> a
     boolean access$000(com.google.android.apps.dashclock.api.DashClockExtension) -> a
     android.content.pm.Signature access$100() -> a
     com.google.android.apps.dashclock.api.internal.IExtensionHost access$202(com.google.android.apps.dashclock.api.DashClockExtension,com.google.android.apps.dashclock.api.internal.IExtensionHost) -> a
@@ -77,6 +78,7 @@ com.google.android.apps.dashclock.api.internal.IExtensionHost$Stub$Proxy -> com.
 fr.nicopico.dashclock.birthday.BirthdayService -> fr.nicopico.dashclock.birthday.BirthdayService:
     fr.nicopico.dashclock.birthday.data.BirthdayRetriever birthdayRetriever -> a
     int daysLimit -> b
+    boolean showQuickContact -> c
     void onInitialize(boolean) -> a
     void updatePreferences() -> b
     void onUpdateData(int) -> a
@@ -458,6 +460,8 @@ org.joda.time.base.AbstractInstant -> a.a.a.a.b:
     int compareTo(org.joda.time.ReadableInstant) -> a
     boolean isAfter(long) -> b
     boolean isAfter(org.joda.time.ReadableInstant) -> b
+    boolean isEqual(long) -> c
+    boolean isEqual(org.joda.time.ReadableInstant) -> c
     java.lang.String toString() -> toString
     int compareTo(java.lang.Object) -> compareTo
 org.joda.time.base.AbstractPartial -> a.a.a.a.c:
