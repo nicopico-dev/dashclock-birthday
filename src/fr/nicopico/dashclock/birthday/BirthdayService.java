@@ -79,7 +79,7 @@ public class BirthdayService extends DashClockExtension {
 
             DateTime birthdayEvent = birthday.birthdayDate.toDateTime(today);
             int days;
-            if (birthdayEvent.isAfter(today)) {
+            if (birthdayEvent.isAfter(today) || birthdayEvent.isEqual(today)) {
                 days = Days.daysBetween(today, birthdayEvent).getDays();
             }
             else {
