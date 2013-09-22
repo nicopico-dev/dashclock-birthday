@@ -77,11 +77,17 @@ public class BirthdayService extends DashClockExtension {
             updatePreferences();
         }
 
-        if (birthdays.size() > 0) {
-            Birthday birthday = birthdays.get(0);
-            DateTime today = new DateTime();
+        DateTime today = new DateTime();
 
+        int upcomingBirthdays = 0;
+        String collapsedTitle = null;
+        String expandedTitle = null;
+        StringBuilder body = new StringBuilder();
+
+        for (Birthday birthday : birthdays) {
             DateTime birthdayEvent = birthday.birthdayDate.toDateTime(today);
+
+            // How many days before the birthday ?
             int days;
             if (birthdayEvent.isAfter(today) || birthdayEvent.isEqual(today)) {
                 days = Days.daysBetween(today, birthdayEvent).getDays();
@@ -90,62 +96,95 @@ public class BirthdayService extends DashClockExtension {
                 // Next birthday event is next year
                 days = Days.daysBetween(today, birthdayEvent.plusYears(1)).getDays();
             }
-            if (days > daysLimit) {
-                publishUpdate(new ExtensionData().visible(false));
-                return;
-            }
 
-            StringBuilder body = new StringBuilder();
+            // Should the birthday be displayed ?
+            if (days <= daysLimit) {
+                upcomingBirthdays++;
 
-            // Age
-            if (!birthday.unknownYear) {
-                int age = today.get(DateTimeFieldType.year()) - birthday.year;
-                body.append(res.getString(R.string.age_format, age));
-                body.append(' ');
-            }
+                if (upcomingBirthdays == 1) {
+                    // A single birthday will be displayed
+                    collapsedTitle = birthday.displayName;
+                    expandedTitle = res.getString(R.string.single_birthday_title_format, birthday.displayName);
+                }
+                else {
+                    // More than one birthday will be displayed
+                    collapsedTitle = res.getString(R.string.multiple_birthdays_collapsed_title, upcomingBirthdays);
+                    expandedTitle = res.getString(R.string.multiple_birthdays_title_format, upcomingBirthdays);
 
-            // When
-            int daysFormatResId;
-            switch (days) {
-            case 0:
-                daysFormatResId = R.string.when_today_format;
-                break;
-            case 1:
-                daysFormatResId = R.string.when_tomorrow_format;
-                break;
-            default:
-                daysFormatResId = R.string.when_days_format;
-            }
-            body.append(res.getString(daysFormatResId, days));
+                    if (upcomingBirthdays == 2) {
+                        // Modify previous line to include the contact name
+                        body.insert(0, ", ");
+                        body.insert(0, birthdays.get(0).displayName);
+                    }
+                }
 
-            // Click action
-            Intent contactIntent;
-            if (showQuickContact) {
-                // Open QuickContact dialog on click
-                contactIntent = QuickContactProxy.buildIntent(getApplicationContext(), birthday.lookupKey);
+                // More than 1 upcoming birthday: display contact name
+                if (upcomingBirthdays > 1) {
+                    body.append("\n").append(birthday.displayName).append(", ");
+                }
+
+                // Age
+                if (!birthday.unknownYear) {
+                    int age = today.get(DateTimeFieldType.year()) - birthday.year;
+                    body.append(res.getString(R.string.age_format, age));
+                    body.append(' ');
+                }
+
+                // When
+                int daysFormatResId;
+                switch (days) {
+                case 0:
+                    daysFormatResId = R.string.when_today_format;
+                    break;
+                case 1:
+                    daysFormatResId = R.string.when_tomorrow_format;
+                    break;
+                default:
+                    daysFormatResId = R.string.when_days_format;
+                }
+
+                body.append(res.getString(daysFormatResId, days));
             }
             else {
-                contactIntent = new Intent(Intent.ACTION_VIEW);
-                //noinspection ConstantConditions
-                contactIntent.setData(
-                        Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_URI, String.valueOf(birthday.contactId))
-                );
+                // All visible birthdays have been processed
+                break;
             }
+        }
+
+        if (upcomingBirthdays > 0) {
+            Intent clickIntent = buildClickIntent(birthdays.subList(0, upcomingBirthdays));
 
             // Display message
             publishUpdate(
                     new ExtensionData()
                             .visible(true)
                             .icon(R.drawable.ic_extension_white)
-                            .status(birthday.displayName)
-                            .expandedTitle(res.getString(R.string.title_format, birthday.displayName))
+                            .status(collapsedTitle)
+                            .expandedTitle(expandedTitle)
                             .expandedBody(body.toString())
-                            .clickIntent(contactIntent)
+                            .clickIntent(clickIntent)
             );
         }
         else {
-            // No upcoming birthday
+            // Nothing to show
             publishUpdate(new ExtensionData().visible(false));
         }
+    }
+
+    private Intent buildClickIntent(List<Birthday> birthdays) {
+        Intent clickIntent;
+        if (showQuickContact) {
+            // Open QuickContact dialog on click
+            clickIntent = QuickContactProxy.buildIntent(getApplicationContext(), birthdays.get(0).lookupKey);
+        }
+        else {
+            clickIntent = new Intent(Intent.ACTION_VIEW);
+            //noinspection ConstantConditions
+            clickIntent.setData(
+                    Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_URI, String.valueOf(birthdays.get(0).contactId))
+            );
+        }
+
+        return clickIntent;
     }
 }

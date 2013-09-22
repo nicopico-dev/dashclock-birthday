@@ -6,7 +6,7 @@
     <string name="extension_description">Display a reminder for your contact birthdays</string>
     <string name="settings_title">DashClock Birthday Settings</string>
 
-    <string name="title_format">%1$s\'s birthday</string>
+    <string name="single_birthday_title_format">%1$s\'s birthday</string>
     <string name="age_format">%1$s years old</string>
     <string name="when_days_format">in %1$d days</string>
     <string name="when_today_format">today!</string>
@@ -22,4 +22,7 @@
     <string name="pref_show_quickcontact">QuickContact</string>
     <string name="pref_show_quickcontact_on">Show QuickContact badge on tap</string>
     <string name="pref_show_quickcontact_off">Show Contacts application on tap</string>
+
+    <string name="multiple_birthdays_collapsed_title">%1$d birthdays</string>
+    <string name="multiple_birthdays_title_format">%1$d upcoming birthdays</string>
 </resources>

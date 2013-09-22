@@ -4,7 +4,7 @@
     <string name="extension_description">Affiche un rappel pour l\'anniversaire de vos contacts</string>
     <string name="settings_title">Paramètres de DashClock Birthday</string>
 
-    <string name="title_format">Anniversaire de %1$s</string>
+    <string name="single_birthday_title_format">Anniversaire de %1$s</string>
     <string name="age_format">%1$s ans</string>
     <string name="when_days_format">dans %1$d jours</string>
     <string name="when_today_format">aujourd\'hui!</string>
@@ -20,4 +20,7 @@
     <string name="pref_show_quickcontact">QuickContact</string>
     <string name="pref_show_quickcontact_on">Affiche la fenêtre QuickContact au toucher</string>
     <string name="pref_show_quickcontact_off">Affiche l\'application Contacts au toucher</string>
+
+    <string name="multiple_birthdays_collapsed_title">%1$d anniversaires</string>
+    <string name="multiple_birthdays_title_format">%1$d anniveraires à venir</string>
 </resources>
