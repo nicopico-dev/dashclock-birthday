@@ -82,6 +82,7 @@ fr.nicopico.dashclock.birthday.BirthdayService -> fr.nicopico.dashclock.birthday
     void onInitialize(boolean) -> a
     void updatePreferences() -> b
     void onUpdateData(int) -> a
+    android.content.Intent buildClickIntent(java.util.List) -> a
 fr.nicopico.dashclock.birthday.QuickContactProxy -> fr.nicopico.dashclock.birthday.QuickContactProxy:
     java.lang.String TAG -> a
     android.content.Intent buildIntent(android.content.Context,java.lang.String) -> a
