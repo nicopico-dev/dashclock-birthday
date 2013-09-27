@@ -16,22 +16,24 @@
 
 package fr.nicopico.dashclock.birthday;
 
-import fr.nicopico.dashclock.birthday.data.Birthday;
-import fr.nicopico.dashclock.birthday.data.BirthdayRetriever;
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeFieldType;
-import org.joda.time.Days;
-
-import java.util.List;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
+
 import com.google.android.apps.dashclock.api.DashClockExtension;
 import com.google.android.apps.dashclock.api.ExtensionData;
+
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeFieldType;
+import org.joda.time.Days;
+
+import java.util.List;
+
+import fr.nicopico.dashclock.birthday.data.Birthday;
+import fr.nicopico.dashclock.birthday.data.BirthdayRetriever;
 
 /**
  * User: Nicolas PICON
@@ -106,17 +108,6 @@ public class BirthdayService extends DashClockExtension {
                     collapsedTitle = birthday.displayName;
                     expandedTitle = res.getString(R.string.single_birthday_title_format, birthday.displayName);
                 }
-                else {
-                    // More than one birthday will be displayed
-                    collapsedTitle = res.getString(R.string.multiple_birthdays_collapsed_title, upcomingBirthdays);
-                    expandedTitle = res.getString(R.string.multiple_birthdays_title_format, upcomingBirthdays);
-
-                    if (upcomingBirthdays == 2) {
-                        // Modify previous line to include the contact name
-                        body.insert(0, ", ");
-                        body.insert(0, birthdays.get(0).displayName);
-                    }
-                }
 
                 // More than 1 upcoming birthday: display contact name
                 if (upcomingBirthdays > 1) {
@@ -153,6 +144,10 @@ public class BirthdayService extends DashClockExtension {
 
         if (upcomingBirthdays > 0) {
             Intent clickIntent = buildClickIntent(birthdays.subList(0, upcomingBirthdays));
+
+            if (upcomingBirthdays > 1) {
+                collapsedTitle += " + " + (upcomingBirthdays - 1);
+            }
 
             // Display message
             publishUpdate(
