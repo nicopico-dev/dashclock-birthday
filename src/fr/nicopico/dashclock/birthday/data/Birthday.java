@@ -16,12 +16,12 @@
 
 package fr.nicopico.dashclock.birthday.data;
 
-import org.joda.time.MonthDay;
-
 import android.content.ContentResolver;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.ContactsContract;
+
+import org.joda.time.MonthDay;
 
 /**
 * User: Nicolas PICON
@@ -38,7 +38,7 @@ public class Birthday implements Comparable<Birthday> {
     public boolean unknownYear = true;
     public int year = 0;
 
-    public final MonthDay TODAY = new MonthDay();
+    private final MonthDay TODAY = new MonthDay();
 
     public Birthday(ContentResolver contentResolver, long contactId) {
         this.contactId = contactId;

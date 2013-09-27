@@ -22,7 +22,4 @@
     <string name="pref_show_quickcontact">QuickContact</string>
     <string name="pref_show_quickcontact_on">Show QuickContact badge on tap</string>
     <string name="pref_show_quickcontact_off">Show Contacts application on tap</string>
-
-    <string name="multiple_birthdays_collapsed_title">%1$d birthdays</string>
-    <string name="multiple_birthdays_title_format">%1$d upcoming birthdays</string>
 </resources>
