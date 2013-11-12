@@ -10,7 +10,7 @@
 # of these optimizations on its own).
 -dontoptimize
 -dontpreverify
-#-dontobfuscate
+-dontobfuscate
 # Note that if you want to enable optimization, you cannot just
 # include optimization flags in your own project configuration file;
 # instead you will need to point to the
