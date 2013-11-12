@@ -16,6 +16,11 @@
 
 package fr.nicopico.dashclock.birthday.data;
 
+import android.content.ContentResolver;
+import android.content.Context;
+import android.database.Cursor;
+import android.provider.ContactsContract;
+
 import org.joda.time.MonthDay;
 
 import java.util.ArrayList;
@@ -24,11 +29,6 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
-
-import android.content.ContentResolver;
-import android.content.Context;
-import android.database.Cursor;
-import android.provider.ContactsContract;
 
 /**
  * User: Nicolas PICON
@@ -86,8 +86,11 @@ public class BirthdayRetriever {
     }
 
     private Birthday buildBirthday(ContentResolver contentResolver, Cursor c) {
+        String birthdate = c.getString(1);
+        if (birthdate == null) return null;
+
         // Analyze birthday string
-        Matcher regexMatcher = regexDate.matcher(c.getString(1));
+        Matcher regexMatcher = regexDate.matcher(birthdate);
 
         if (regexMatcher.find()) {
             Birthday contact = new Birthday(contentResolver, c.getLong(0));
