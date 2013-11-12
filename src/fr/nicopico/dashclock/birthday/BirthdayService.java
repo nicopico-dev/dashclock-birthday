@@ -29,6 +29,8 @@ import com.google.android.apps.dashclock.api.ExtensionData;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.Days;
+import org.joda.time.IllegalFieldValueException;
+import org.joda.time.MonthDay;
 
 import java.util.List;
 
@@ -87,7 +89,20 @@ public class BirthdayService extends DashClockExtension {
         StringBuilder body = new StringBuilder();
 
         for (Birthday birthday : birthdays) {
-            DateTime birthdayEvent = birthday.birthdayDate.toDateTime(today);
+            DateTime birthdayEvent;
+            MonthDay birthdayDate = birthday.birthdayDate;
+            try {
+                birthdayEvent = birthdayDate.toDateTime(today);
+            }
+            catch (IllegalFieldValueException e) {
+                if (birthdayDate.getDayOfMonth() == 29 && birthdayDate.getMonthOfYear() == 2) {
+                    // Birthday on Feburary 29th (leap year) -> March 1st
+                    birthdayEvent = birthdayDate.dayOfMonth().addToCopy(1).toDateTime(today);
+                }
+                else {
+                    throw e;
+                }
+            }
 
             // How many days before the birthday ?
             int days;
