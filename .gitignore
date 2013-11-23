@@ -1,6 +1,7 @@
 .idea/
 gen/
 out/
+others/captures
 project.properties
 *.iml
 *.apk
