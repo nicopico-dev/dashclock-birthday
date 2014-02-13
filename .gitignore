@@ -1,7 +1,10 @@
 .idea/
+.gradle/
 gen/
 out/
+build/
 others/captures
 project.properties
+gradle.properties
 *.iml
 *.apk
