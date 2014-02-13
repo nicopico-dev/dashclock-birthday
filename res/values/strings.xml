@@ -1,25 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="app_name">DashClock Birthday Extension</string>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
-    <string name="extension_title">Birthday</string>
-    <string name="extension_description">Display a reminder for your contact birthdays</string>
-    <string name="settings_title">DashClock Birthday Settings</string>
+    <!-- Application title - DO NOT TRANSLATE -->
+    <string name="app_name">
+        <xliff:g>DashClock Birthday Extension</xliff:g>
+    </string>
 
-    <string name="single_birthday_title_format">%1$s\'s birthday</string>
-    <string name="age_format">%1$s years old</string>
-    <string name="when_days_format">in %1$d days</string>
-    <string name="when_today_format">today!</string>
-    <string name="when_tomorrow_format">tomorrow</string>
+    <!-- Displayed in DashClock Settings -->
+    <string name="extension_title">
+        Birthday
+    </string>
+    <string name="extension_description">
+        Display a reminder for your contact birthdays
+    </string>
+    
+    <!-- Contact information -->
+    <string name="single_birthday_title_format">
+        <xliff:g id="contact_name">%1$s</xliff:g>\'s birthday
+    </string>
+    <!-- Age of the contact -->
+    <string name="age_format">
+        <xliff:g id="contact_age">%1$s</xliff:g> years olds
+    </string>
 
-    <string name="pref_days_limit_title">Days limit</string>
-    <string name="pref_days_limit_0_summary_format">Notify birthdays for the same day</string>
+    <!-- When is the contact birthday ? -->
+    <string name="when_days_format">
+        in <xliff:g id="how_many_days_until_birthday">%1$d</xliff:g> days
+    </string>
+    <!-- Special case when the birthday is today -->
+    <string name="when_today_format">
+        today!
+    </string>
+    <!-- Special case when the birthday is tomorrow -->
+    <string name="when_tomorrow_format">
+        tomorrow
+    </string>
+
+    <!-- General settings title -->
+    <string name="settings_title">
+        <xliff:g>DashClock Birthday</xliff:g> Settings
+    </string>
+
+    <!-- Set the number of days we look for future birthday -->
+    <string name="pref_days_limit_title">
+        Days limit
+    </string>
+    <!-- Today only -->
+    <string name="pref_days_limit_0_summary_format">
+        Notify birthdays for the same day
+    </string>
     <plurals name="pref_days_limit_summary_format">
-        <item quantity="one">Notify birthdays for the next day</item>
-        <item quantity="other">Notify birthdays for the next %1$s days</item>
+        <!-- Today and tomorrow -->
+        <item quantity="one">
+            Notify birthdays for the next day
+        </item>
+        <!-- N days in the future -->
+        <item quantity="other">
+            Notify birthdays for the next <xliff:g id="days_limit">%1$d</xliff:g> days
+        </item>
     </plurals>
 
-    <string name="pref_show_quickcontact">QuickContact</string>
-    <string name="pref_show_quickcontact_on">Show QuickContact badge on tap</string>
-    <string name="pref_show_quickcontact_off">Show Contacts application on tap</string>
+    <!-- Switch (ON/OFF): what happens when the user click on the extension -->
+    <string name="pref_show_quickcontact">
+        <xliff:g>QuickContact</xliff:g>
+    </string>
+    <!-- QuickContact enabled description -->
+    <string name="pref_show_quickcontact_on">
+        Show <xliff:g>QuickContact</xliff:g> badge on tap
+    </string>
+    <!-- QuickContact disabled description -->
+    <string name="pref_show_quickcontact_off">
+        Show Contacts application on tap
+    </string>
 </resources>

@@ -1,25 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="app_name">DashClock Birthday Extension</string>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
-    <string name="extension_title">Anniversaire</string>
-    <string name="extension_description">Affiche un rappel pour l\'anniversaire de vos contacts</string>
-    <string name="settings_title">Paramètres de DashClock Birthday</string>
+    <!-- Application title - DO NOT TRANSLATE -->
+    <string name="app_name">
+        <xliff:g>DashClock Birthday Extension</xliff:g>
+    </string>
 
-    <string name="single_birthday_title_format">Anniversaire de %1$s</string>
-    <string name="age_format">%1$s ans</string>
-    <string name="when_days_format">dans %1$d jours</string>
-    <string name="when_today_format">aujourd\'hui!</string>
-    <string name="when_tomorrow_format">demain</string>
+    <!-- Displayed in DashClock Settings -->
+    <string name="extension_title">
+        Anniversaire
+    </string>
+    <string name="extension_description">
+        Affiche un rappel pour l\'anniversaire de vos contacts
+    </string>
+    
+    <!-- Contact information -->
+    <string name="single_birthday_title_format">
+        Anniversaire de <xliff:g id="contact_name">%1$s</xliff:g>
+    </string>
+    <!-- Age of the contact -->
+    <string name="age_format">
+        <xliff:g id="contact_age">%1$s</xliff:g> ans
+    </string>
 
-    <string name="pref_days_limit_title">Limite du nombre de jours</string>
-    <string name="pref_days_limit_0_summary_format">Affiche les anniversaires pour le jour même</string>
+    <!-- When is the contact birthday ? -->
+    <string name="when_days_format">
+        dans <xliff:g id="how_many_days_until_birthday">%1$d</xliff:g> jours
+    </string>
+    <!-- Special case when the birthday is today -->
+    <string name="when_today_format">
+        aujourd\'hui!
+    </string>
+    <!-- Special case when the birthday is tomorrow -->
+    <string name="when_tomorrow_format">
+        demain
+    </string>
+
+    <!-- General settings title -->
+    <string name="settings_title">
+        Paramètres de <xliff:g>DashClock Birthday</xliff:g>
+    </string>
+
+    <!-- Set the number of days we look for future birthday -->
+    <string name="pref_days_limit_title">
+        Limite du nombre de jours
+    </string>
+    <!-- Today only -->
+    <string name="pref_days_limit_0_summary_format">
+        Affiche les anniversaires pour le jour même
+    </string>
     <plurals name="pref_days_limit_summary_format">
-        <item quantity="one">Affiche les anniversaires pour le prochain jour</item>
-        <item quantity="other">Affiche les anniversaires pour les %1$s prochains jours</item>
+        <!-- Today and tomorrow -->
+        <item quantity="one">
+            Affiche les anniversaires pour le lendemain
+        </item>
+        <!-- N days in the future -->
+        <item quantity="other">
+            Affiche les anniversaires pour les <xliff:g id="days_limit">%1$s</xliff:g> prochains jours
+        </item>
     </plurals>
 
-    <string name="pref_show_quickcontact">QuickContact</string>
-    <string name="pref_show_quickcontact_on">Affiche la fenêtre QuickContact au toucher</string>
-    <string name="pref_show_quickcontact_off">Affiche l\'application Contacts au toucher</string>
+    <!-- Switch (ON/OFF): what happens when the user click on the extension -->
+    <string name="pref_show_quickcontact">
+        <xliff:g>QuickContact</xliff:g>
+    </string>
+    <!-- QuickContact enabled description -->
+    <string name="pref_show_quickcontact_on">
+        Affiche la fenêtre <xliff:g>QuickContact</xliff:g> au toucher
+    </string>
+    <!-- QuickContact disabled description -->
+    <string name="pref_show_quickcontact_off">
+        Affiche l\'application Contacts au toucher
+    </string>
 </resources>
