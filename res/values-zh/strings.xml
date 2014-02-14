@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <!-- Application title - DO NOT TRANSLATE -->
+    <string name="app_name">
+        <xliff:g>DashClock Birthday Extension</xliff:g>
+    </string>
+
+    <!-- Displayed in DashClock Settings -->
+    <string name="extension_title">生日</string>
+    <string name="extension_description">显示联系人生日提醒</string>
+    
+    <!-- Contact information -->
+    <string name="single_birthday_title_format">
+        <xliff:g id="contact_name">%1$s</xliff:g>的生日
+    </string>
+    <!-- Age of the contact -->
+    <string name="age_format">
+        <xliff:g id="contact_age">%1$s</xliff:g>岁
+    </string>
+
+    <!-- When is the contact birthday ? -->
+    <string name="when_days_format">
+        <xliff:g id="how_many_days_until_birthday">%1$d</xliff:g>天之后
+    </string>
+    <!-- Special case when the birthday is today -->
+    <string name="when_today_format">今天</string>
+    <!-- Special case when the birthday is tomorrow -->
+    <string name="when_tomorrow_format">明天</string>
+
+    <!-- General settings title -->
+    <string name="settings_title">
+        <xliff:g>DashClock Birthday</xliff:g>设置
+    </string>
+
+    <!-- Set the number of days we look for future birthday -->
+    <string name="pref_days_limit_title">天数限制</string>
+    <!-- Today only -->
+    <string name="pref_days_limit_0_summary_format">通知今天的生日</string>
+    <plurals name="pref_days_limit_summary_format">
+        <item quantity="other">
+            通知未来<xliff:g id="days_limit">%1$d</xliff:g>天内的生日
+        </item>
+    </plurals>
+
+    <!-- Switch (ON/OFF): what happens when the user click on the extension -->
+    <string name="pref_show_quickcontact">
+        快速联系人
+    </string>
+    <!-- QuickContact enabled description -->
+    <string name="pref_show_quickcontact_on">
+        显示可用的快速联系人标识
+    </string>
+    <!-- QuickContact disabled description -->
+    <string name="pref_show_quickcontact_off">
+        显示可用的联系人应用
+    </string>
+</resources>
