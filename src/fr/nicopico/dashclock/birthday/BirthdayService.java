@@ -89,7 +89,7 @@ public class BirthdayService extends DashClockExtension {
             }
             catch (IllegalFieldValueException e) {
                 if (birthdayDate.getDayOfMonth() == 29 && birthdayDate.getMonthOfYear() == 2) {
-                    // Birthday on Feburary 29th (leap year) -> March 1st
+                    // Birthday on February 29th (leap year) -> March 1st
                     birthdayEvent = birthdayDate.dayOfMonth().addToCopy(1).toDateTime(today);
                 }
                 else {

@@ -20,7 +20,7 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
 import android.provider.ContactsContract;
-
+import android.util.Log;
 import org.joda.time.MonthDay;
 
 import java.util.ArrayList;
@@ -35,6 +35,8 @@ import java.util.regex.PatternSyntaxException;
  * Date: 24/08/13 - 18:58
  */
 public class BirthdayRetriever {
+
+    private static final String TAG = BirthdayRetriever.class.getSimpleName();
 
     private static final Pattern regexDate;
     static {
@@ -86,25 +88,31 @@ public class BirthdayRetriever {
     }
 
     private Birthday buildBirthday(ContentResolver contentResolver, Cursor c) {
-        String birthdate = c.getString(1);
-        if (birthdate == null) return null;
+        String birthDate = c.getString(1);
+        if (birthDate == null) return null;
 
         // Analyze birthday string
-        Matcher regexMatcher = regexDate.matcher(birthdate);
+        try {
+            Matcher regexMatcher = regexDate.matcher(birthDate);
 
-        if (regexMatcher.find()) {
-            Birthday contact = new Birthday(contentResolver, c.getLong(0));
-            contact.birthdayDate = new MonthDay(
-                    Integer.parseInt(regexMatcher.group(2)),
-                    Integer.parseInt(regexMatcher.group(3))
-            );
+            if (regexMatcher.find()) {
+                Birthday contact = new Birthday(contentResolver, c.getLong(0));
+                contact.birthdayDate = new MonthDay(
+                        Integer.parseInt(regexMatcher.group(2)),
+                        Integer.parseInt(regexMatcher.group(3))
+                );
 
-            if (!"-".equals(regexMatcher.group(1))) {
-                contact.year = Integer.parseInt(regexMatcher.group(1));
-                contact.unknownYear = false;
+                if (!"-".equals(regexMatcher.group(1))) {
+                    contact.year = Integer.parseInt(regexMatcher.group(1));
+                    contact.unknownYear = false;
+                }
+
+                return contact;
             }
-
-            return contact;
+        }
+        catch (Exception e) {
+            Log.e(TAG, "Error while analyzing birthday", e);
+            return null;
         }
 
         return null;
