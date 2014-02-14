@@ -23,6 +23,7 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.MenuItem;
 
 /**
@@ -30,6 +31,9 @@ import android.view.MenuItem;
  * Date: 24/08/13 - 17:52
  */
 public class SettingsActivity extends PreferenceActivity {
+
+    private static final String TAG = SettingsActivity.class.getSimpleName();
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ActionBar actionBar = getActionBar();
@@ -94,7 +98,15 @@ public class SettingsActivity extends PreferenceActivity {
             }
             else if (BirthdayService.PREF_DAYS_LIMIT_KEY.equals(preference.getKey())) {
                 final Resources res = preference.getContext().getResources();
-                final Integer intValue = Integer.valueOf(stringValue);
+                int intValue;
+
+                try {
+                    intValue = Integer.valueOf(stringValue);
+                }
+                catch (NumberFormatException e) {
+                    Log.e(TAG, "Unable to retrieve days limit preference. Restore default", e);
+                    intValue = 7;
+                }
 
                 String summary;
                 if (intValue == 0) {
@@ -104,7 +116,7 @@ public class SettingsActivity extends PreferenceActivity {
                     summary = res.getQuantityString(
                             R.plurals.pref_days_limit_summary_format,
                             intValue,
-                            value
+                            intValue
                     );
                 }
                 preference.setSummary(summary);
