@@ -19,9 +19,14 @@
         <xliff:g id="contact_name">%1$s</xliff:g>\'s birthday
     </string>
     <!-- Age of the contact -->
-    <string name="age_format">
-        <xliff:g id="contact_age">%1$s</xliff:g> years olds
-    </string>
+    <plurals name="age_format">
+        <item quantity="one">
+            <xliff:g id="contact_age">%1$s</xliff:g> year old
+        </item>
+        <item quantity="other">
+            <xliff:g id="contact_age">%1$s</xliff:g> years old
+        </item>
+    </plurals>
 
     <!-- When is the contact birthday ? -->
     <string name="when_days_format">

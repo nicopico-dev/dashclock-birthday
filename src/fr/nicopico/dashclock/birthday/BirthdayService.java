@@ -22,20 +22,13 @@ import android.content.res.Resources;
 import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
-
 import com.google.android.apps.dashclock.api.DashClockExtension;
 import com.google.android.apps.dashclock.api.ExtensionData;
-
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeFieldType;
-import org.joda.time.Days;
-import org.joda.time.IllegalFieldValueException;
-import org.joda.time.MonthDay;
-
-import java.util.List;
-
 import fr.nicopico.dashclock.birthday.data.Birthday;
 import fr.nicopico.dashclock.birthday.data.BirthdayRetriever;
+import org.joda.time.*;
+
+import java.util.List;
 
 /**
  * User: Nicolas PICON
@@ -132,7 +125,7 @@ public class BirthdayService extends DashClockExtension {
                 // Age
                 if (!birthday.unknownYear) {
                     int age = today.get(DateTimeFieldType.year()) - birthday.year;
-                    body.append(res.getString(R.string.age_format, age));
+                    body.append(res.getQuantityString(R.plurals.age_format, age, age));
                     body.append(' ');
                 }
 

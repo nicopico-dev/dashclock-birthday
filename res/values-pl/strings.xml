@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+<resources xmlns:tools="http://schemas.android.com/tools" xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
     <!-- Application title - DO NOT TRANSLATE -->
     <string name="app_name">
@@ -8,60 +8,63 @@
 
     <!-- Displayed in DashClock Settings -->
     <string name="extension_title">
-        Anniversaire
+        Urodziny
     </string>
     <string name="extension_description">
-        Affiche un rappel pour l\'anniversaire de vos contacts
+        Wyświetla przypomnienia o urodzinach znajomych.
     </string>
     
     <!-- Contact information -->
     <string name="single_birthday_title_format">
-        Anniversaire de <xliff:g id="contact_name">%1$s</xliff:g>
+        <xliff:g id="contact_name">%1$s</xliff:g> ma urodziny
     </string>
     <!-- Age of the contact -->
-    <plurals name="age_format">
+    <plurals name="age_format" tools:ignore="MissingQuantity">
         <item quantity="one">
-            <xliff:g id="contact_age">%1$s</xliff:g> an
+            <xliff:g id="contact_age">%1$s</xliff:g> rok
+        </item>
+        <item quantity="few">
+            <xliff:g id="contact_age">%1$s</xliff:g> lata
         </item>
         <item quantity="other">
-            <xliff:g id="contact_age">%1$s</xliff:g> ans
+            <xliff:g id="contact_age">%1$s</xliff:g> lat
         </item>
     </plurals>
 
     <!-- When is the contact birthday ? -->
     <string name="when_days_format">
-        dans <xliff:g id="how_many_days_until_birthday">%1$d</xliff:g> jours
+        za <xliff:g id="how_many_days_until_birthday">%1$d</xliff:g> dni.
     </string>
     <!-- Special case when the birthday is today -->
     <string name="when_today_format">
-        aujourd\'hui!
+        dzisiaj!
     </string>
     <!-- Special case when the birthday is tomorrow -->
     <string name="when_tomorrow_format">
-        demain
+        jutro
     </string>
 
     <!-- General settings title -->
     <string name="settings_title">
-        Paramètres de <xliff:g>DashClock Birthday</xliff:g>
+        <xliff:g>DashClock Birthday</xliff:g> Ustawienia
     </string>
 
     <!-- Set the number of days we look for future birthday -->
     <string name="pref_days_limit_title">
-        Limite du nombre de jours
+        Limit dni
     </string>
     <!-- Today only -->
     <string name="pref_days_limit_0_summary_format">
-        Affiche les anniversaires pour le jour même
+        Powiadamiaj o urodzinach tylko w dniu dzisiejszym.
     </string>
-    <plurals name="pref_days_limit_summary_format">
+    <plurals name="pref_days_limit_summary_format" tools:ignore="MissingQuantity">
         <!-- Today and tomorrow -->
         <item quantity="one">
-            Affiche les anniversaires pour le lendemain
+            Powiadamiaj o urodzinach dzisiaj i jutro.
         </item>
         <!-- N days in the future -->
         <item quantity="other">
-            Affiche les anniversaires pour les <xliff:g id="days_limit">%1$s</xliff:g> prochains jours
+            Powiadamiaj o urodzinach w ciągu najbliższych <xliff:g id="days_limit">%1$d</xliff:g> dni.
         </item>
     </plurals>
 
@@ -71,10 +74,10 @@
     </string>
     <!-- QuickContact enabled description -->
     <string name="pref_show_quickcontact_on">
-        Affiche la fenêtre <xliff:g>QuickContact</xliff:g> au toucher
+        Pokazuj <xliff:g>QuickContact</xliff:g> po tapnięciu.
     </string>
     <!-- QuickContact disabled description -->
     <string name="pref_show_quickcontact_off">
-        Affiche l\'application Contacts au toucher
+        Pokazuj kartę kontaktu po tapnięciu.
     </string>
 </resources>

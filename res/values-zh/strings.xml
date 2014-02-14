@@ -15,9 +15,11 @@
         <xliff:g id="contact_name">%1$s</xliff:g>的生日
     </string>
     <!-- Age of the contact -->
-    <string name="age_format">
-        <xliff:g id="contact_age">%1$s</xliff:g>岁
-    </string>
+    <plurals name="age_format">
+        <item quantity="other">
+            <xliff:g id="contact_age">%1$s</xliff:g>岁
+        </item>
+    </plurals>
 
     <!-- When is the contact birthday ? -->
     <string name="when_days_format">
