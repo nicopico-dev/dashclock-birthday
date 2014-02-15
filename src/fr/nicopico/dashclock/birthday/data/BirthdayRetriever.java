@@ -60,7 +60,7 @@ public class BirthdayRetriever {
                         ContactsContract.CommonDataKinds.Event.START_DATE
                 },
                 String.format(
-                        "%s = ? and %s = %d",
+                        "%s = ? and %s = '%s'",
                         ContactsContract.Data.MIMETYPE,
                         ContactsContract.CommonDataKinds.Event.TYPE,
                         ContactsContract.CommonDataKinds.Event.TYPE_BIRTHDAY
