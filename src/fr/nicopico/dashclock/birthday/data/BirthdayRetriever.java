@@ -96,18 +96,22 @@ public class BirthdayRetriever {
             Matcher regexMatcher = regexDate.matcher(birthDate);
 
             if (regexMatcher.find()) {
-                Birthday contact = new Birthday(contentResolver, c.getLong(0));
-                contact.birthdayDate = new MonthDay(
+                Birthday birthday = new Birthday(contentResolver, c.getLong(0));
+
+                // Birthday *must* have a display name
+                if (birthday.displayName == null) return null;
+
+                birthday.birthdayDate = new MonthDay(
                         Integer.parseInt(regexMatcher.group(2)),
                         Integer.parseInt(regexMatcher.group(3))
                 );
 
                 if (!"-".equals(regexMatcher.group(1))) {
-                    contact.year = Integer.parseInt(regexMatcher.group(1));
-                    contact.unknownYear = false;
+                    birthday.year = Integer.parseInt(regexMatcher.group(1));
+                    birthday.unknownYear = false;
                 }
 
-                return contact;
+                return birthday;
             }
         }
         catch (Exception e) {

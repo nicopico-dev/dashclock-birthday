@@ -21,6 +21,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.ContactsContract;
 
+import android.text.TextUtils;
 import org.joda.time.MonthDay;
 
 /**
@@ -50,6 +51,7 @@ public class Birthday implements Comparable<Birthday> {
                 new String[] {
                         ContactsContract.Contacts.LOOKUP_KEY,
                         ContactsContract.Contacts.DISPLAY_NAME_PRIMARY,
+                        ContactsContract.Contacts.DISPLAY_NAME,
                         ContactsContract.Contacts.PHOTO_URI,
                         ContactsContract.Contacts.PHOTO_THUMBNAIL_URI
                 },
@@ -59,9 +61,9 @@ public class Birthday implements Comparable<Birthday> {
         try {
             if (c != null && c.moveToFirst()) {
                 this.lookupKey = c.getString(0);
-                this.displayName = c.getString(1);
-                this.uriPhoto = c.getString(2);
-                this.uriThumbnail = c.getString(3);
+                this.displayName = TextUtils.isEmpty(c.getString(1)) ? c.getString(2) : c.getString(1);
+                this.uriPhoto = c.getString(3);
+                this.uriThumbnail = c.getString(4);
             }
             else {
                 this.lookupKey = "0";
