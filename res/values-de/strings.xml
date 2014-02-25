@@ -1,67 +1,65 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
     <!-- Application title - DO NOT TRANSLATE -->
     <string name="app_name">
-        <xliff:g>DashClock Birthday Extension</xliff:g>
+        <xliff:g>DashClock Birthday Erweiterung</xliff:g>
     </string>
 
     <!-- Displayed in DashClock Settings -->
     <string name="extension_title">
-        Birthday
+        Geburtstag
     </string>
     <string name="extension_description">
-        Display a reminder for your contact birthdays
+        Am Geburtstag eines Kontakts Erinnerung einblenden
     </string>
-    
+
     <!-- Contact information -->
     <string name="single_birthday_title_format">
-        <xliff:g id="contact_name">%1$s</xliff:g>\'s birthday
+        Geburtstag von <xliff:g id="contact_name">%1$s</xliff:g>
     </string>
     <!-- Age of the contact -->
     <plurals name="age_format">
         <item quantity="one">
-            <xliff:g id="contact_age">%1$s</xliff:g> year old
+            <xliff:g id="contact_age">%1$s</xliff:g> Jahr alt
         </item>
         <item quantity="other">
-            <xliff:g id="contact_age">%1$s</xliff:g> years old
+            <xliff:g id="contact_age">%1$s</xliff:g> Jahre alt
         </item>
     </plurals>
 
     <!-- When is the contact birthday ? -->
     <string name="when_days_format">
-        in <xliff:g id="how_many_days_until_birthday">%1$d</xliff:g> days
+        in <xliff:g id="how_many_days_until_birthday">%1$d</xliff:g> Tagen
     </string>
     <!-- Special case when the birthday is today -->
     <string name="when_today_format">
-        today!
+        Heute!
     </string>
     <!-- Special case when the birthday is tomorrow -->
     <string name="when_tomorrow_format">
-        tomorrow
+        Morgen
     </string>
 
     <!-- General settings title -->
     <string name="settings_title">
-        <xliff:g>DashClock Birthday</xliff:g> Settings
+        <xliff:g>DashClock Birthday</xliff:g> Einstellungen
     </string>
 
     <!-- Set the number of days we look for future birthday -->
     <string name="pref_days_limit_title">
-        Days limit
+        Anzahl Tage
     </string>
     <!-- Today only -->
     <string name="pref_days_limit_0_summary_format">
-        Notify birthdays for today
+        Erinnerung am Geburtstag einblenden
     </string>
     <plurals name="pref_days_limit_summary_format">
-        <!-- Today and tomorrow -->
         <item quantity="one">
-            Notify birthdays for tomorrow
+            Geburtstage von morgen anzeigen
         </item>
-        <!-- N days in the future -->
         <item quantity="other">
-            Notify birthdays for the next <xliff:g id="days_limit">%1$d</xliff:g> days
+            Geburtstage der folgenden <xliff:g id="days_limit">%1$d</xliff:g> Tage anzeigen
         </item>
     </plurals>
 
@@ -71,10 +69,10 @@
     </string>
     <!-- QuickContact enabled description -->
     <string name="pref_show_quickcontact_on">
-        Show <xliff:g>QuickContact</xliff:g> badge on tap
+        Beim Antippen <xliff:g>QuickContact</xliff:g>-Icon zeigen
     </string>
     <!-- QuickContact disabled description -->
     <string name="pref_show_quickcontact_off">
-        Show Contacts application on tap
+        Beim Antippen Kontakt-App öffnen
     </string>
 </resources>
