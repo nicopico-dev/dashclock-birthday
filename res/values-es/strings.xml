@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <!-- Application title - DO NOT TRANSLATE -->
+    <string name="app_name">
+        <xliff:g>DashClock Birthday Extension</xliff:g>
+    </string>
+
+    <!-- Displayed in DashClock Settings -->
+    <string name="extension_title">
+        Cumpleaños
+    </string>
+    <string name="extension_description">
+        Muestra un recordatorio de los cumpleaños de sus contactos
+    </string>
+    
+    <!-- Contact information -->
+    <string name="single_birthday_title_format">
+        Cumpleaños de <xliff:g id="contact_name">%1$s</xliff:g>
+    </string>
+    <!-- Age of the contact -->
+    <plurals name="age_format">
+        <item quantity="one">
+            <xliff:g id="contact_age">%1$s</xliff:g> año
+        </item>
+        <item quantity="other">
+            <xliff:g id="contact_age">%1$s</xliff:g> años
+        </item>
+    </plurals>
+
+    <!-- When is the contact birthday ? -->
+    <string name="when_days_format">
+        en <xliff:g id="how_many_days_until_birthday">%1$d</xliff:g> días
+    </string>
+    <!-- Special case when the birthday is today -->
+    <string name="when_today_format">
+        hoy!
+    </string>
+    <!-- Special case when the birthday is tomorrow -->
+    <string name="when_tomorrow_format">
+        mañana
+    </string>
+
+    <!-- General settings title -->
+    <string name="settings_title">
+        Configuración de la <xliff:g>DashClock Birthday</xliff:g>
+    </string>
+
+    <!-- Set the number of days we look for future birthday -->
+    <string name="pref_days_limit_title">
+        Límite de días
+    </string>
+    <!-- Today only -->
+    <string name="pref_days_limit_0_summary_format">
+        Notificar los cumpleaños de hoy
+    </string>
+    <plurals name="pref_days_limit_summary_format">
+        <!-- Today and tomorrow -->
+        <item quantity="one">
+            Notificar los cumpleaños de mañana
+        </item>
+        <!-- N days in the future -->
+        <item quantity="other">
+            Notificar los cumpleaños de los próximos <xliff:g id="days_limit">%1$d</xliff:g> días
+        </item>
+    </plurals>
+
+    <!-- Switch (ON/OFF): what happens when the user click on the extension -->
+    <string name="pref_show_quickcontact">
+        <xliff:g>QuickContact</xliff:g>
+    </string>
+    <!-- QuickContact enabled description -->
+    <string name="pref_show_quickcontact_on">
+        Muestra <xliff:g>QuickContact</xliff:g> al tocar
+    </string>
+    <!-- QuickContact disabled description -->
+    <string name="pref_show_quickcontact_off">
+        Muestra la aplicación Contactos al tocar
+    </string>
+</resources>
