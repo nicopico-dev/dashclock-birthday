@@ -19,4 +19,11 @@
         android:summaryOn="@string/pref_show_quickcontact_on"
         android:summaryOff="@string/pref_show_quickcontact_off"/>
 
+    <CheckBoxPreference
+            android:key="pref_disable_localization"
+            android:title="@string/pref_disable_localization"
+            android:defaultValue="false"
+            android:summaryOn="@string/pref_disable_localization_on"
+            android:summaryOff="@string/pref_disable_localization_off"/>
+
 </PreferenceScreen>

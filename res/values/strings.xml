@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+<resources
+    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Application title - DO NOT TRANSLATE -->
     <string name="app_name">
@@ -77,4 +79,19 @@
     <string name="pref_show_quickcontact_off">
         Show Contacts application on tap
     </string>
+
+    <!-- Switch (ON/OFF): what happens when the user click on the extension -->
+    <!-- TODO Translate -->
+    <string name="pref_disable_localization" tools:ignore="MissingTranslation">
+        Disable localization
+    </string>
+    <!-- QuickContact enabled description -->
+    <string name="pref_disable_localization_on" tools:ignore="MissingTranslation">
+        Force English language
+    </string>
+    <!-- QuickContact disabled description -->
+    <string name="pref_disable_localization_off" tools:ignore="MissingTranslation">
+        Use localization if available
+    </string>
+
 </resources>

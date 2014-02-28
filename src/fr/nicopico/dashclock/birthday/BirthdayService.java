@@ -18,6 +18,7 @@ package fr.nicopico.dashclock.birthday;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.preference.PreferenceManager;
@@ -29,6 +30,7 @@ import fr.nicopico.dashclock.birthday.data.BirthdayRetriever;
 import org.joda.time.*;
 
 import java.util.List;
+import java.util.Locale;
 
 /**
  * User: Nicolas PICON
@@ -38,10 +40,15 @@ public class BirthdayService extends DashClockExtension {
 
     public static final String PREF_DAYS_LIMIT_KEY = "pref_days_limit";
     public static final String PREF_SHOW_QUICK_CONTACT = "pref_show_quickcontact";
+    public static final String PREF_DISABLE_LOCALIZATION = "pref_disable_localization";
 
     private BirthdayRetriever birthdayRetriever;
+
     private int daysLimit;
     private boolean showQuickContact;
+    private boolean disableLocalization;
+
+    private boolean previousDisableLocalizationValue;
 
     @Override
     protected void onInitialize(boolean isReconnect) {
@@ -54,15 +61,17 @@ public class BirthdayService extends DashClockExtension {
         addWatchContentUris(new String[] {
                 ContactsContract.Contacts.CONTENT_URI.toString()
         });
+
+        previousDisableLocalizationValue = false;
     }
 
-    @SuppressWarnings("ConstantConditions")
     private void updatePreferences() {
-        final SharedPreferences sharedPreferences =
-                PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        //noinspection ConstantConditions
+        final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
         daysLimit = Integer.valueOf(sharedPreferences.getString(PREF_DAYS_LIMIT_KEY, "7"));
         showQuickContact = sharedPreferences.getBoolean(PREF_SHOW_QUICK_CONTACT, true);
+        disableLocalization = sharedPreferences.getBoolean(PREF_DISABLE_LOCALIZATION, false);
     }
 
     @Override
@@ -72,6 +81,27 @@ public class BirthdayService extends DashClockExtension {
 
         if (reason == UPDATE_REASON_SETTINGS_CHANGED) {
             updatePreferences();
+        }
+
+        Configuration config = new Configuration();
+        config.setToDefaults();
+
+        // Disable/enable Android localization
+        if (disableLocalization != previousDisableLocalizationValue) {
+            if (disableLocalization) {
+                config.locale = new Locale("en");
+            }
+            else {
+                // Restore Android localization
+                //noinspection ConstantConditions
+                config.locale = Resources.getSystem().getConfiguration().locale;
+            }
+
+            Locale.setDefault(config.locale);
+            getBaseContext().getResources()
+                    .updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+
+            previousDisableLocalizationValue = disableLocalization;
         }
 
         DateTime today = new DateTime();
