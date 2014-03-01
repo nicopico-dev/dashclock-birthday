@@ -83,7 +83,7 @@
     <!-- Switch (ON/OFF): what happens when the user click on the extension -->
     <!-- TODO Translate -->
     <string name="pref_disable_localization" tools:ignore="MissingTranslation">
-        Disable localization
+        Disable localization (experimental)
     </string>
     <!-- QuickContact enabled description -->
     <string name="pref_disable_localization_on" tools:ignore="MissingTranslation">

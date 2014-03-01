@@ -41,6 +41,7 @@ public class BirthdayService extends DashClockExtension {
     public static final String PREF_DAYS_LIMIT_KEY = "pref_days_limit";
     public static final String PREF_SHOW_QUICK_CONTACT = "pref_show_quickcontact";
     public static final String PREF_DISABLE_LOCALIZATION = "pref_disable_localization";
+    public static final String DEFAULT_LANG = "en";
 
     private BirthdayRetriever birthdayRetriever;
 
@@ -48,7 +49,7 @@ public class BirthdayService extends DashClockExtension {
     private boolean showQuickContact;
     private boolean disableLocalization;
 
-    private boolean previousDisableLocalizationValue;
+    private boolean needToRefreshLocalization;
 
     @Override
     protected void onInitialize(boolean isReconnect) {
@@ -61,8 +62,6 @@ public class BirthdayService extends DashClockExtension {
         addWatchContentUris(new String[] {
                 ContactsContract.Contacts.CONTENT_URI.toString()
         });
-
-        previousDisableLocalizationValue = false;
     }
 
     private void updatePreferences() {
@@ -71,7 +70,10 @@ public class BirthdayService extends DashClockExtension {
 
         daysLimit = Integer.valueOf(sharedPreferences.getString(PREF_DAYS_LIMIT_KEY, "7"));
         showQuickContact = sharedPreferences.getBoolean(PREF_SHOW_QUICK_CONTACT, true);
+
+        boolean previousDisableLocalizationValue = disableLocalization;
         disableLocalization = sharedPreferences.getBoolean(PREF_DISABLE_LOCALIZATION, false);
+        needToRefreshLocalization = previousDisableLocalizationValue != disableLocalization;
     }
 
     @Override
@@ -87,9 +89,10 @@ public class BirthdayService extends DashClockExtension {
         config.setToDefaults();
 
         // Disable/enable Android localization
-        if (disableLocalization != previousDisableLocalizationValue) {
+        if (needToRefreshLocalization ||
+                (disableLocalization && !DEFAULT_LANG.equals(Locale.getDefault().getLanguage())) ) {
             if (disableLocalization) {
-                config.locale = new Locale("en");
+                config.locale = new Locale(DEFAULT_LANG);
             }
             else {
                 // Restore Android localization
@@ -100,8 +103,6 @@ public class BirthdayService extends DashClockExtension {
             Locale.setDefault(config.locale);
             getBaseContext().getResources()
                     .updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
-
-            previousDisableLocalizationValue = disableLocalization;
         }
 
         DateTime today = new DateTime();
