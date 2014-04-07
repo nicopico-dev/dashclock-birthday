@@ -34,6 +34,9 @@ public class SettingsActivity extends PreferenceActivity {
 
     private static final String TAG = SettingsActivity.class.getSimpleName();
 
+    public static final String PREF_SHOW_QUICK_CONTACT = "pref_show_quickcontact";
+    public static final String PREF_DISABLE_LOCALIZATION = "pref_disable_localization";
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ActionBar actionBar = getActionBar();
@@ -70,9 +73,10 @@ public class SettingsActivity extends PreferenceActivity {
         // Bind the summaries of EditText/List/Dialog/Ringtone preferences to
         // their values. When their values change, their summaries are updated
         // to reflect the new value, per the Android Design guidelines.
-        bindPreferenceSummaryToValue(findPreference(BirthdayService.PREF_DAYS_LIMIT_KEY));
+        bindPreferenceSummaryToValue(findPreference(PREF_DAYS_LIMIT_KEY));
     }
 
+    public static final String PREF_DAYS_LIMIT_KEY = "pref_days_limit";
     /**
      * A preference value change listener that updates the preference's summary to reflect its new
      * value.
@@ -96,7 +100,7 @@ public class SettingsActivity extends PreferenceActivity {
                 );
 
             }
-            else if (BirthdayService.PREF_DAYS_LIMIT_KEY.equals(preference.getKey())) {
+            else if (PREF_DAYS_LIMIT_KEY.equals(preference.getKey())) {
                 final Resources res = preference.getContext().getResources();
                 int intValue;
 

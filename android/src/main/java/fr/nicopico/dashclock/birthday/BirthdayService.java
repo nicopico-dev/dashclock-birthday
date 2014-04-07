@@ -16,6 +16,9 @@
 
 package fr.nicopico.dashclock.birthday;
 
+import fr.nicopico.dashclock.birthday.data.Birthday;
+import fr.nicopico.dashclock.birthday.data.BirthdayRetriever;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -25,8 +28,6 @@ import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
 import com.google.android.apps.dashclock.api.DashClockExtension;
 import com.google.android.apps.dashclock.api.ExtensionData;
-import fr.nicopico.dashclock.birthday.data.Birthday;
-import fr.nicopico.dashclock.birthday.data.BirthdayRetriever;
 import org.joda.time.*;
 
 import java.util.List;
@@ -38,9 +39,6 @@ import java.util.Locale;
  */
 public class BirthdayService extends DashClockExtension {
 
-    public static final String PREF_DAYS_LIMIT_KEY = "pref_days_limit";
-    public static final String PREF_SHOW_QUICK_CONTACT = "pref_show_quickcontact";
-    public static final String PREF_DISABLE_LOCALIZATION = "pref_disable_localization";
     public static final String DEFAULT_LANG = "en";
 
     private BirthdayRetriever birthdayRetriever;
@@ -68,11 +66,11 @@ public class BirthdayService extends DashClockExtension {
         //noinspection ConstantConditions
         final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
-        daysLimit = Integer.valueOf(sharedPreferences.getString(PREF_DAYS_LIMIT_KEY, "7"));
-        showQuickContact = sharedPreferences.getBoolean(PREF_SHOW_QUICK_CONTACT, true);
+        daysLimit = Integer.valueOf(sharedPreferences.getString(SettingsActivity.PREF_DAYS_LIMIT_KEY, "7"));
+        showQuickContact = sharedPreferences.getBoolean(SettingsActivity.PREF_SHOW_QUICK_CONTACT, true);
 
         boolean previousDisableLocalizationValue = disableLocalization;
-        disableLocalization = sharedPreferences.getBoolean(PREF_DISABLE_LOCALIZATION, false);
+        disableLocalization = sharedPreferences.getBoolean(SettingsActivity.PREF_DISABLE_LOCALIZATION, false);
         needToRefreshLocalization = previousDisableLocalizationValue != disableLocalization;
     }
 
