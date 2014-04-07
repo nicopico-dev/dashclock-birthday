@@ -36,6 +36,7 @@ public class SettingsActivity extends PreferenceActivity {
 
     public static final String PREF_SHOW_QUICK_CONTACT = "pref_show_quickcontact";
     public static final String PREF_DISABLE_LOCALIZATION = "pref_disable_localization";
+    public static final String PREF_DEBUG_MODE = "pref_debug_mode";
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

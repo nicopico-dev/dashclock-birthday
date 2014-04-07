@@ -19,6 +19,7 @@ package fr.nicopico.dashclock.birthday;
 import fr.nicopico.dashclock.birthday.data.Birthday;
 import fr.nicopico.dashclock.birthday.data.BirthdayRetriever;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -44,6 +45,7 @@ public class BirthdayService extends DashClockExtension {
     public static final String DEFAULT_LANG = "en";
 
     private BirthdayRetriever birthdayRetriever;
+    private SharedPreferences sharedPreferences;
 
     private int daysLimit;
     private boolean showQuickContact;
@@ -54,7 +56,12 @@ public class BirthdayService extends DashClockExtension {
     @Override
     protected void onInitialize(boolean isReconnect) {
         super.onInitialize(isReconnect);
-        birthdayRetriever = new BirthdayRetriever();
+
+        final Context applicationContext = getApplicationContext();
+        assert applicationContext != null;
+        birthdayRetriever = new BirthdayRetriever(applicationContext);
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(applicationContext);
+
         updatePreferences();
 
         // Listen for contact update
@@ -65,9 +72,6 @@ public class BirthdayService extends DashClockExtension {
     }
 
     private void updatePreferences() {
-        //noinspection ConstantConditions
-        final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-
         daysLimit = Integer.valueOf(sharedPreferences.getString(SettingsActivity.PREF_DAYS_LIMIT_KEY, "7"));
         showQuickContact = sharedPreferences.getBoolean(SettingsActivity.PREF_SHOW_QUICK_CONTACT, true);
 

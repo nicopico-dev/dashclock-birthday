@@ -16,9 +16,14 @@
 
 package fr.nicopico.dashclock.birthday.data;
 
+import fr.nicopico.dashclock.birthday.SettingsActivity;
+
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
 import android.util.Log;
 import org.joda.time.MonthDay;
@@ -48,8 +53,15 @@ public class BirthdayRetriever {
         }
     }
 
+    private final SharedPreferences sharedPreferences;
+
+    public BirthdayRetriever(Context context) {
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+    }
+
     public List<Birthday> getContactWithBirthdays(Context context) {
         ContentResolver contentResolver = context.getContentResolver();
+        final boolean debugMode = sharedPreferences.getBoolean(SettingsActivity.PREF_DEBUG_MODE, false);
 
         // Retrieve contacts with birthdays
         @SuppressWarnings("ConstantConditions")
@@ -74,9 +86,47 @@ public class BirthdayRetriever {
         List<Birthday> result = new ArrayList<Birthday>(c != null ? c.getCount() : 0);
         try {
             Birthday birthday;
+
+
+            // DEBUG MODE
+            StringBuilder sb = null;
+            int nbColumns = 0;
+            if (debugMode) {
+                sb = new StringBuilder();
+                if (c != null) {
+                    nbColumns = c.getColumnCount();
+                    for (String s : c.getColumnNames()) {
+                        sb.append(s).append(';');
+                    }
+                    sb.append("is valid?");
+                }
+            }
+
             while (c != null && c.moveToNext()) {
                 birthday = buildBirthday(contentResolver, c);
                 if (birthday != null) result.add(birthday);
+
+                // DEBUG MODE
+                if (debugMode) {
+                    for (int i = 0; i < nbColumns; i++) {
+                        sb.append(c.getString(i)).append(';');
+                    }
+                    sb.append(birthday != null);
+                    sb.append('\n');
+                }
+            }
+
+            // DEBUG MODE
+            if (debugMode) {
+                // Send email debug content by e-mail
+                // FIXME Add as an action to dashclock
+                Intent mailIntent = new Intent(Intent.ACTION_SEND);
+                mailIntent.setType("message/rfc822");
+                mailIntent.putExtra(Intent.EXTRA_EMAIL, "nicopico.dev@gmail.com");
+                mailIntent.putExtra(Intent.EXTRA_SUBJECT, "[DashClock Birthday] DEBUG");
+                mailIntent.putExtra(Intent.EXTRA_TEXT, sb.toString());
+
+                context.startActivity(Intent.createChooser(mailIntent, "Send DEBUG information"));
             }
         }
         finally {
