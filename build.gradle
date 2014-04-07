@@ -1,72 +1,9 @@
-buildscript {
-    repositories {
-        mavenCentral()
-        maven {
-            url 'http://oss.sonatype.org/content/repositories/snapshots/'
-        }   
-    }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:0.9.+'
-        //classpath 'com.jakewharton.paraphrase:paraphrase:1.0.0-SNAPSHOT'
-    }
-}
+allprojects {
+    ext {
+        compileSdkVersion = 19
+        buildToolsVersion = '19.0.3'
 
-task wrapper(type: Wrapper) {
-    gradleVersion = '1.11'
-}
-ext {
-    compileSdkVersion = 19
-    buildToolsVersion = '19.0.3'
-
-    dashclockApiVersion = '2.0.0'
-    jodaTimeVersion = '2.3'
-}
-
-apply plugin: 'android'
-//apply plugin: 'paraphrase'
-
-repositories {
-    mavenCentral()
-}
-dependencies {
-    compile "com.google.android.apps.dashclock:dashclock-api:$dashclockApiVersion"
-    compile "joda-time:joda-time:$jodaTimeVersion"
-}
-
-android {
-    compileSdkVersion project.ext.compileSdkVersion
-    buildToolsVersion project.ext.buildToolsVersion
-
-    sourceSets {
-        main {
-            manifest.srcFile 'AndroidManifest.xml'
-            java.srcDirs = ['src']
-            resources.srcDirs = ['src']
-            aidl.srcDirs = ['src']
-            renderscript.srcDirs = ['src']
-            res.srcDirs = ['res']
-            assets.srcDirs = ['assets']
-        }
-
-        debug.setRoot('build/debug')
-        release.setRoot('build/release')
-    }
-
-    signingConfigs {
-        release {
-            storeFile file(keystorePath)
-            storePassword keystorePassword
-            keyAlias keystoreKeyAlias
-            keyPassword keystoreKeyPassword
-        }
-    }
-
-    buildTypes {
-        release {
-            runProguard true
-            proguardFiles getDefaultProguardFile('proguard-android.txt')
-            proguardFiles 'proguard-project.txt'
-            signingConfig signingConfigs.release
-        }
+        dashclockApiVersion = '2.0.0'
+        jodaTimeVersion = '2.3'
     }
 }
