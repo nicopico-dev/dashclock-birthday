@@ -26,6 +26,7 @@ import android.content.res.Resources;
 import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
+import android.util.Log;
 import com.google.android.apps.dashclock.api.DashClockExtension;
 import com.google.android.apps.dashclock.api.ExtensionData;
 import org.joda.time.*;
@@ -39,6 +40,7 @@ import java.util.Locale;
  */
 public class BirthdayService extends DashClockExtension {
 
+    private static final String TAG = BirthdayService.class.getSimpleName();
     public static final String DEFAULT_LANG = "en";
 
     private BirthdayRetriever birthdayRetriever;
@@ -122,7 +124,8 @@ public class BirthdayService extends DashClockExtension {
                     birthdayEvent = birthdayDate.dayOfMonth().addToCopy(1).toDateTime(today);
                 }
                 else {
-                    throw e;
+                    Log.e(TAG, "Invalid date", e);
+                    continue;
                 }
             }
 
