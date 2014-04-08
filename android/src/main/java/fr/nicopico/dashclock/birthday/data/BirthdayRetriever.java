@@ -98,7 +98,7 @@ public class BirthdayRetriever {
                     for (String s : c.getColumnNames()) {
                         sb.append(s).append(';');
                     }
-                    sb.append("is valid?");
+                    sb.append("is_valid\n");
                 }
             }
 
@@ -121,12 +121,13 @@ public class BirthdayRetriever {
                 // Send email debug content by e-mail
                 // FIXME Add as an action to dashclock
                 Intent mailIntent = new Intent(Intent.ACTION_SEND);
+                mailIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 mailIntent.setType("message/rfc822");
                 mailIntent.putExtra(Intent.EXTRA_EMAIL, "nicopico.dev@gmail.com");
                 mailIntent.putExtra(Intent.EXTRA_SUBJECT, "[DashClock Birthday] DEBUG");
                 mailIntent.putExtra(Intent.EXTRA_TEXT, sb.toString());
 
-                context.startActivity(Intent.createChooser(mailIntent, "Send DEBUG information"));
+                context.startActivity(mailIntent);
             }
         }
         finally {
