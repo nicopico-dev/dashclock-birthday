@@ -4,7 +4,7 @@ gen/
 out/
 build/
 others/captures
-project.properties
 gradle.properties
+local.properties
 *.iml
 *.apk
