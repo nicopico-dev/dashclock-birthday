@@ -30,6 +30,22 @@ android {
     compileSdkVersion project.ext.compileSdkVersion
     buildToolsVersion project.ext.buildToolsVersion
 
+    defaultConfig {
+        versionCode 6
+        versionName "1.4"
+        minSdkVersion 17
+        targetSdkVersion 19
+    }
+
+    productFlavors {
+        normal {
+            versionName android.defaultConfig.versionName
+        }
+        debugMode {
+            versionName android.defaultConfig.versionName + '-DEBUG-MODE'
+        }
+    }
+
     signingConfigs {
         release {
             storeFile file(keystorePath)
@@ -46,10 +62,5 @@ android {
             proguardFiles 'proguard-project.txt'
             signingConfig signingConfigs.release
         }
-    }
-
-    productFlavors {
-        normal {}
-        debugMode {}
     }
 }

@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest
     xmlns:android="http://schemas.android.com/apk/res/android"
-    package="fr.nicopico.dashclock.birthday"
-    android:versionName="1.4"
-    android:versionCode="6">
-
-    <uses-sdk
-        android:minSdkVersion="17"
-        android:targetSdkVersion="19"/>
+    package="fr.nicopico.dashclock.birthday">
 
     <uses-permission android:name="android.permission.READ_CONTACTS"/>
 
