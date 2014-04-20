@@ -26,4 +26,9 @@
         android:summaryOn="@string/pref_disable_localization_on"
         android:summaryOff="@string/pref_disable_localization_off"/>
 
+    <CheckBoxPreference
+        android:key="pref_debug_mode"
+        android:title="DEBUG"
+        android:defaultValue="false"/>
+
 </PreferenceScreen>
