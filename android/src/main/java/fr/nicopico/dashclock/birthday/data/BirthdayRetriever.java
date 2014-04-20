@@ -16,8 +16,6 @@
 
 package fr.nicopico.dashclock.birthday.data;
 
-import fr.nicopico.dashclock.birthday.SettingsActivity;
-
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
@@ -26,6 +24,7 @@ import android.database.Cursor;
 import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
 import android.util.Log;
+
 import org.joda.time.MonthDay;
 
 import java.util.ArrayList;
@@ -34,6 +33,8 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
+
+import fr.nicopico.dashclock.birthday.SettingsActivity;
 
 /**
  * User: Nicolas PICON
@@ -128,6 +129,11 @@ public class BirthdayRetriever {
                 mailIntent.putExtra(Intent.EXTRA_TEXT, sb.toString());
 
                 context.startActivity(mailIntent);
+
+                // Disable debug mode to prevent spamming the user
+                sharedPreferences.edit()
+                        .putBoolean(SettingsActivity.PREF_DEBUG_MODE, false)
+                        .apply();
             }
         }
         finally {
