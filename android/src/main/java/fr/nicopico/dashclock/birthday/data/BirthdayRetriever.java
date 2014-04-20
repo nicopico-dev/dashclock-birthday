@@ -120,11 +120,10 @@ public class BirthdayRetriever {
             // DEBUG MODE
             if (debugMode) {
                 // Send email debug content by e-mail
-                // FIXME Add as an action to dashclock
                 Intent mailIntent = new Intent(Intent.ACTION_SEND);
                 mailIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 mailIntent.setType("message/rfc822");
-                mailIntent.putExtra(Intent.EXTRA_EMAIL, "nicopico.dev@gmail.com");
+                mailIntent.putExtra(Intent.EXTRA_EMAIL, new String[] { "nicopico.dev@gmail.com" } );
                 mailIntent.putExtra(Intent.EXTRA_SUBJECT, "[DashClock Birthday] DEBUG");
                 mailIntent.putExtra(Intent.EXTRA_TEXT, sb.toString());
 
