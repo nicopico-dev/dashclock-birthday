@@ -18,11 +18,13 @@ package fr.nicopico.dashclock.birthday;
 
 import android.app.ActionBar;
 import android.content.res.Resources;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.MenuItem;
 
@@ -37,6 +39,7 @@ public class SettingsActivity extends PreferenceActivity {
     public static final String PREF_SHOW_QUICK_CONTACT = "pref_show_quickcontact";
     public static final String PREF_DISABLE_LOCALIZATION = "pref_disable_localization";
     public static final String PREF_DEBUG_MODE = "pref_debug_mode";
+    public static final String PREF_CONTACT_GROUP = "pref_contact_group";
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,6 +78,38 @@ public class SettingsActivity extends PreferenceActivity {
         // their values. When their values change, their summaries are updated
         // to reflect the new value, per the Android Design guidelines.
         bindPreferenceSummaryToValue(findPreference(PREF_DAYS_LIMIT_KEY));
+
+        // Contact group preference
+        Cursor groupCursor = null;
+        try {
+            groupCursor = getContentResolver().query(
+                    ContactsContract.Groups.CONTENT_URI,
+                    new String[]{
+                            ContactsContract.Groups._ID,
+                            ContactsContract.Groups.TITLE
+                    }, null, null, null
+            );
+            int nbGroups = groupCursor.getCount();
+            CharSequence[] groupNames = new CharSequence[nbGroups + 1];
+            CharSequence[] groupIds = new CharSequence[nbGroups + 1];
+            int i = 0;
+            groupNames[i] = getString(R.string.pref_no_group_contact);
+            groupIds[i] = "";
+            while (groupCursor.moveToNext()) {
+                groupNames[++i] = groupCursor.getString(1);
+                groupIds[i] = groupCursor.getString(0);
+            }
+
+            ListPreference listPreference = (ListPreference) findPreference(PREF_CONTACT_GROUP);
+            listPreference.setEntries(groupNames);
+            listPreference.setEntryValues(groupIds);
+            bindPreferenceSummaryToValue(listPreference);
+
+        } catch (IndexOutOfBoundsException e) {
+            Log.e(TAG, "", e);
+        } finally {
+            if (groupCursor != null) groupCursor.close();
+        }
     }
 
     public static final String PREF_DAYS_LIMIT_KEY = "pref_days_limit";
@@ -100,15 +135,13 @@ public class SettingsActivity extends PreferenceActivity {
                         index >= 0 ? listPreference.getEntries()[index] : null
                 );
 
-            }
-            else if (PREF_DAYS_LIMIT_KEY.equals(preference.getKey())) {
+            } else if (PREF_DAYS_LIMIT_KEY.equals(preference.getKey())) {
                 final Resources res = preference.getContext().getResources();
                 int intValue;
 
                 try {
                     intValue = Integer.valueOf(stringValue);
-                }
-                catch (NumberFormatException e) {
+                } catch (NumberFormatException e) {
                     Log.e(TAG, "Unable to retrieve days limit preference. Restore default", e);
                     intValue = 7;
                 }
@@ -116,8 +149,7 @@ public class SettingsActivity extends PreferenceActivity {
                 String summary;
                 if (intValue == 0) {
                     summary = res.getString(R.string.pref_days_limit_0_summary_format);
-                }
-                else {
+                } else {
                     summary = res.getQuantityString(
                             R.plurals.pref_days_limit_summary_format,
                             intValue,
@@ -125,8 +157,7 @@ public class SettingsActivity extends PreferenceActivity {
                     );
                 }
                 preference.setSummary(summary);
-            }
-            else {
+            } else {
                 // For all other preferences, set the summary to the value's
                 // simple string representation.
                 preference.setSummary(stringValue);

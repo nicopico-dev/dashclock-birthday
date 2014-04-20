@@ -26,6 +26,10 @@
         android:summaryOn="@string/pref_disable_localization_on"
         android:summaryOff="@string/pref_disable_localization_off"/>
 
+    <ListPreference
+        android:key="pref_contact_group"
+        android:title="@string/pref_contact_group"/>
+
     <CheckBoxPreference
         android:key="pref_debug_mode"
         android:title="DEBUG"
