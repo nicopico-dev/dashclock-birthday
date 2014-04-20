@@ -41,6 +41,8 @@ public class SettingsActivity extends PreferenceActivity {
     public static final String PREF_DEBUG_MODE = "pref_debug_mode";
     public static final String PREF_CONTACT_GROUP = "pref_contact_group";
 
+    public static final String NO_CONTACT_GROUP_SELECTED = "NO_CONTACT_GROUP_SELECTED";
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ActionBar actionBar = getActionBar();
@@ -84,7 +86,7 @@ public class SettingsActivity extends PreferenceActivity {
         try {
             groupCursor = getContentResolver().query(
                     ContactsContract.Groups.CONTENT_URI,
-                    new String[]{
+                    new String[] {
                             ContactsContract.Groups._ID,
                             ContactsContract.Groups.TITLE
                     }, null, null, null
@@ -93,8 +95,8 @@ public class SettingsActivity extends PreferenceActivity {
             CharSequence[] groupNames = new CharSequence[nbGroups + 1];
             CharSequence[] groupIds = new CharSequence[nbGroups + 1];
             int i = 0;
-            groupNames[i] = getString(R.string.pref_no_group_contact);
-            groupIds[i] = "";
+            groupNames[i] = getString(R.string.pref_no_contact_group_selected);
+            groupIds[i] = NO_CONTACT_GROUP_SELECTED;
             while (groupCursor.moveToNext()) {
                 groupNames[++i] = groupCursor.getString(1);
                 groupIds[i] = groupCursor.getString(0);
@@ -104,10 +106,11 @@ public class SettingsActivity extends PreferenceActivity {
             listPreference.setEntries(groupNames);
             listPreference.setEntryValues(groupIds);
             bindPreferenceSummaryToValue(listPreference);
-
-        } catch (IndexOutOfBoundsException e) {
-            Log.e(TAG, "", e);
-        } finally {
+        }
+        catch (IndexOutOfBoundsException e) {
+            Log.e(TAG, "Error while building contact group list", e);
+        }
+        finally {
             if (groupCursor != null) groupCursor.close();
         }
     }
@@ -135,13 +138,15 @@ public class SettingsActivity extends PreferenceActivity {
                         index >= 0 ? listPreference.getEntries()[index] : null
                 );
 
-            } else if (PREF_DAYS_LIMIT_KEY.equals(preference.getKey())) {
+            }
+            else if (PREF_DAYS_LIMIT_KEY.equals(preference.getKey())) {
                 final Resources res = preference.getContext().getResources();
                 int intValue;
 
                 try {
                     intValue = Integer.valueOf(stringValue);
-                } catch (NumberFormatException e) {
+                }
+                catch (NumberFormatException e) {
                     Log.e(TAG, "Unable to retrieve days limit preference. Restore default", e);
                     intValue = 7;
                 }
@@ -149,7 +154,8 @@ public class SettingsActivity extends PreferenceActivity {
                 String summary;
                 if (intValue == 0) {
                     summary = res.getString(R.string.pref_days_limit_0_summary_format);
-                } else {
+                }
+                else {
                     summary = res.getQuantityString(
                             R.plurals.pref_days_limit_summary_format,
                             intValue,
@@ -157,7 +163,8 @@ public class SettingsActivity extends PreferenceActivity {
                     );
                 }
                 preference.setSummary(summary);
-            } else {
+            }
+            else {
                 // For all other preferences, set the summary to the value's
                 // simple string representation.
                 preference.setSummary(stringValue);

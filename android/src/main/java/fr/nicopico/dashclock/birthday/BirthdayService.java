@@ -28,8 +28,10 @@ import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
 import android.util.Log;
+
 import com.google.android.apps.dashclock.api.DashClockExtension;
 import com.google.android.apps.dashclock.api.ExtensionData;
+
 import org.joda.time.*;
 
 import java.util.List;
@@ -50,6 +52,7 @@ public class BirthdayService extends DashClockExtension {
     private int daysLimit;
     private boolean showQuickContact;
     private boolean disableLocalization;
+    private String contactGroupId;
 
     private boolean needToRefreshLocalization;
 
@@ -72,17 +75,29 @@ public class BirthdayService extends DashClockExtension {
     }
 
     private void updatePreferences() {
-        daysLimit = Integer.valueOf(sharedPreferences.getString(SettingsActivity.PREF_DAYS_LIMIT_KEY, "7"));
-        showQuickContact = sharedPreferences.getBoolean(SettingsActivity.PREF_SHOW_QUICK_CONTACT, true);
+        daysLimit = Integer.valueOf(sharedPreferences.getString(
+                SettingsActivity.PREF_DAYS_LIMIT_KEY, "7"
+        ));
+        showQuickContact = sharedPreferences.getBoolean(
+                SettingsActivity.PREF_SHOW_QUICK_CONTACT, true
+        );
 
         boolean previousDisableLocalizationValue = disableLocalization;
-        disableLocalization = sharedPreferences.getBoolean(SettingsActivity.PREF_DISABLE_LOCALIZATION, false);
+        disableLocalization = sharedPreferences.getBoolean(
+                SettingsActivity.PREF_DISABLE_LOCALIZATION, false
+        );
         needToRefreshLocalization = previousDisableLocalizationValue != disableLocalization;
+
+        contactGroupId = sharedPreferences.getString(
+                SettingsActivity.PREF_CONTACT_GROUP, SettingsActivity.NO_CONTACT_GROUP_SELECTED
+        );
+
     }
 
     @Override
     protected void onUpdateData(int reason) {
-        final List<Birthday> birthdays = birthdayRetriever.getContactWithBirthdays(getApplicationContext());
+        final List<Birthday> birthdays =
+                birthdayRetriever.getContactWithBirthdays(getApplicationContext(), contactGroupId);
         final Resources res = getResources();
 
         if (reason == UPDATE_REASON_SETTINGS_CHANGED) {
@@ -94,7 +109,7 @@ public class BirthdayService extends DashClockExtension {
 
         // Disable/enable Android localization
         if (needToRefreshLocalization ||
-                (disableLocalization && !DEFAULT_LANG.equals(Locale.getDefault().getLanguage())) ) {
+                (disableLocalization && !DEFAULT_LANG.equals(Locale.getDefault().getLanguage()))) {
             if (disableLocalization) {
                 config.locale = new Locale(DEFAULT_LANG);
             }
@@ -168,14 +183,14 @@ public class BirthdayService extends DashClockExtension {
                 // When
                 int daysFormatResId;
                 switch (days) {
-                case 0:
-                    daysFormatResId = R.string.when_today_format;
-                    break;
-                case 1:
-                    daysFormatResId = R.string.when_tomorrow_format;
-                    break;
-                default:
-                    daysFormatResId = R.string.when_days_format;
+                    case 0:
+                        daysFormatResId = R.string.when_today_format;
+                        break;
+                    case 1:
+                        daysFormatResId = R.string.when_tomorrow_format;
+                        break;
+                    default:
+                        daysFormatResId = R.string.when_days_format;
                 }
 
                 body.append(res.getString(daysFormatResId, days));

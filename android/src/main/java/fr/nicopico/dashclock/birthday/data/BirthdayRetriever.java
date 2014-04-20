@@ -21,6 +21,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.database.CursorJoiner;
+import android.database.MatrixCursor;
 import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
 import android.util.Log;
@@ -45,6 +47,7 @@ public class BirthdayRetriever {
     private static final String TAG = BirthdayRetriever.class.getSimpleName();
 
     private static final Pattern regexDate;
+
     static {
         try {
             regexDate = Pattern.compile("(\\d{4}|-)-(\\d{2})-(\\d{2})", Pattern.COMMENTS);
@@ -60,13 +63,93 @@ public class BirthdayRetriever {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
     }
 
-    public List<Birthday> getContactWithBirthdays(Context context) {
+    public List<Birthday> getContactWithBirthdays(Context context, String contactGroupId) {
         ContentResolver contentResolver = context.getContentResolver();
         final boolean debugMode = sharedPreferences.getBoolean(SettingsActivity.PREF_DEBUG_MODE, false);
 
-        // Retrieve contacts with birthdays
-        @SuppressWarnings("ConstantConditions")
-        Cursor c = contentResolver.query(
+        // Retrieve all contacts with birthdays
+        Cursor cursorBirthdays = getBirthdaysCursor(contentResolver);
+        Cursor cursorGroups = null;
+
+        //noinspection ConstantConditions
+        if (cursorBirthdays == null) {
+            return new ArrayList<Birthday>(0);
+        }
+
+        List<Birthday> result = new ArrayList<Birthday>(cursorBirthdays.getCount());
+        try {
+            Birthday birthday;
+
+            // DEBUG MODE
+            StringBuilder sb = null;
+            int nbColumns = 0;
+            if (debugMode) {
+                sb = new StringBuilder();
+                nbColumns = cursorBirthdays.getColumnCount();
+                for (String s : cursorBirthdays.getColumnNames()) {
+                    sb.append(s).append(';');
+                }
+                sb.append("is_valid\n");
+            }
+
+            cursorGroups = getGroupsCursor(contentResolver, contactGroupId, cursorBirthdays);
+            CursorJoiner joiner = new CursorJoiner(
+                    cursorBirthdays, new String[] { ContactsContract.Data.CONTACT_ID },
+                    cursorGroups, new String[] { ContactsContract.Data.CONTACT_ID }
+            );
+
+            for (CursorJoiner.Result joinerResult : joiner) {
+                switch (joinerResult) {
+                    case BOTH:
+                        birthday = buildBirthday(contentResolver, cursorBirthdays);
+                        if (birthday != null) result.add(birthday);
+
+                        // DEBUG MODE
+                        if (debugMode) {
+                            for (int i = 0; i < nbColumns; i++) {
+                                sb.append(cursorBirthdays.getString(i)).append(';');
+                            }
+                            sb.append(birthday != null);
+                            sb.append('\n');
+                        }
+                        break;
+
+                    case LEFT:
+                    case RIGHT:
+                        // Nothing to do
+                        break;
+                }
+            }
+
+            // DEBUG MODE
+            if (debugMode) {
+                // Send email debug content by e-mail
+                Intent mailIntent = new Intent(Intent.ACTION_SEND);
+                mailIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                mailIntent.setType("message/rfc822");
+                mailIntent.putExtra(Intent.EXTRA_EMAIL, new String[] { "nicopico.dev@gmail.com" });
+                mailIntent.putExtra(Intent.EXTRA_SUBJECT, "[DashClock Birthday] DEBUG");
+                mailIntent.putExtra(Intent.EXTRA_TEXT, sb.toString());
+
+                context.startActivity(mailIntent);
+
+                // Disable debug mode to prevent spamming the user
+                sharedPreferences.edit()
+                        .putBoolean(SettingsActivity.PREF_DEBUG_MODE, false)
+                        .apply();
+            }
+        }
+        finally {
+            cursorBirthdays.close();
+            if (cursorGroups != null) cursorGroups.close();
+        }
+
+        Collections.sort(result);
+        return result;
+    }
+
+    private Cursor getBirthdaysCursor(ContentResolver contentResolver) {
+        return contentResolver.query(
                 ContactsContract.Data.CONTENT_URI,
                 new String[] {
                         ContactsContract.Data.CONTACT_ID,
@@ -83,64 +166,41 @@ public class BirthdayRetriever {
                 },
                 ContactsContract.Data.CONTACT_ID
         );
+    }
 
-        List<Birthday> result = new ArrayList<Birthday>(c != null ? c.getCount() : 0);
-        try {
-            Birthday birthday;
+    private Cursor getGroupsCursor(ContentResolver contentResolver, String contactGroupId, Cursor cursorBirthdays) {
+        String[] columns = { ContactsContract.Data.CONTACT_ID };
 
-
-            // DEBUG MODE
-            StringBuilder sb = null;
-            int nbColumns = 0;
-            if (debugMode) {
-                sb = new StringBuilder();
-                if (c != null) {
-                    nbColumns = c.getColumnCount();
-                    for (String s : c.getColumnNames()) {
-                        sb.append(s).append(';');
-                    }
-                    sb.append("is_valid\n");
-                }
+        if (SettingsActivity.NO_CONTACT_GROUP_SELECTED.equals(contactGroupId)) {
+            // Return an empty cursor
+            MatrixCursor cursorGroups = new MatrixCursor(columns);
+            while (cursorBirthdays.moveToNext()) {
+                cursorGroups.addRow(new Long[] { cursorBirthdays.getLong(0) });
             }
-
-            while (c != null && c.moveToNext()) {
-                birthday = buildBirthday(contentResolver, c);
-                if (birthday != null) result.add(birthday);
-
-                // DEBUG MODE
-                if (debugMode) {
-                    for (int i = 0; i < nbColumns; i++) {
-                        sb.append(c.getString(i)).append(';');
-                    }
-                    sb.append(birthday != null);
-                    sb.append('\n');
-                }
-            }
-
-            // DEBUG MODE
-            if (debugMode) {
-                // Send email debug content by e-mail
-                Intent mailIntent = new Intent(Intent.ACTION_SEND);
-                mailIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                mailIntent.setType("message/rfc822");
-                mailIntent.putExtra(Intent.EXTRA_EMAIL, new String[] { "nicopico.dev@gmail.com" } );
-                mailIntent.putExtra(Intent.EXTRA_SUBJECT, "[DashClock Birthday] DEBUG");
-                mailIntent.putExtra(Intent.EXTRA_TEXT, sb.toString());
-
-                context.startActivity(mailIntent);
-
-                // Disable debug mode to prevent spamming the user
-                sharedPreferences.edit()
-                        .putBoolean(SettingsActivity.PREF_DEBUG_MODE, false)
-                        .apply();
-            }
+            // Reinit birthday cursor
+            cursorBirthdays.moveToPosition(-1);
+            return cursorGroups;
         }
-        finally {
-            if (c != null) c.close();
+        else {
+            String selection = String.format(
+                    "%s = ? and %s = ?",
+                    ContactsContract.Data.MIMETYPE,
+                    ContactsContract.CommonDataKinds.GroupMembership.GROUP_ROW_ID
+            );
+            String[] selectionArgs = {
+                    ContactsContract.CommonDataKinds.GroupMembership.CONTENT_ITEM_TYPE,
+                    contactGroupId
+            };
+
+            return contentResolver.query(
+                    ContactsContract.Data.CONTENT_URI,
+                    columns,
+                    selection,
+                    selectionArgs,
+                    ContactsContract.Data.CONTACT_ID
+            );
         }
 
-        Collections.sort(result);
-        return result;
     }
 
     private Birthday buildBirthday(ContentResolver contentResolver, Cursor c) {
