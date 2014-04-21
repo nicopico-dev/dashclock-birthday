@@ -77,4 +77,13 @@
     <string name="pref_show_quickcontact_off">
         Affiche l\'application Contacts au toucher
     </string>
+
+    <!-- Contact group preference -->
+    <string name="pref_contact_group">
+        Groupe de contact
+    </string>
+    <string name="pref_no_contact_group_selected">
+        — Tous les contacts —
+    </string>
+
 </resources>

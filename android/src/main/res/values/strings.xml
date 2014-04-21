@@ -52,6 +52,9 @@
     <string name="pref_days_limit_title">
         Days limit
     </string>
+    <string name="pref_days_limit_default">
+        7
+    </string>
     <!-- Today only -->
     <string name="pref_days_limit_0_summary_format">
         Notify birthdays for today
@@ -80,20 +83,25 @@
         Show Contacts application on tap
     </string>
 
-    <!-- Switch (ON/OFF): what happens when the user click on the extension -->
-    <!-- TODO Translate -->
+    <!-- Switch (ON/OFF): disable localization -->
     <string name="pref_disable_localization" tools:ignore="MissingTranslation">
-        Disable localization (experimental)
+        Disable language localization (experimental)
     </string>
-    <!-- QuickContact enabled description -->
+    <!-- Localization is disabled -->
     <string name="pref_disable_localization_on" tools:ignore="MissingTranslation">
         Force English language
     </string>
-    <!-- QuickContact disabled description -->
+    <!-- Localization is enabled -->
     <string name="pref_disable_localization_off" tools:ignore="MissingTranslation">
-        Use localization if available
+        Use language localization if available
     </string>
-    <string name="pref_no_contact_group_selected">-- All contacts --</string>
-    <string name="pref_contact_group">Contact group</string>
+
+    <!-- Contact group preference -->
+    <string name="pref_contact_group">
+        Contact group
+    </string>
+    <string name="pref_no_contact_group_selected">
+        — All contacts —
+    </string>
 
 </resources>
