@@ -96,13 +96,13 @@ public class BirthdayService extends DashClockExtension {
 
     @Override
     protected void onUpdateData(int reason) {
-        final List<Birthday> birthdays =
-                birthdayRetriever.getContactWithBirthdays(getApplicationContext(), contactGroupId);
-        final Resources res = getResources();
-
         if (reason == UPDATE_REASON_SETTINGS_CHANGED) {
             updatePreferences();
         }
+
+        final Resources res = getResources();
+        final List<Birthday> birthdays =
+                birthdayRetriever.getContactWithBirthdays(getApplicationContext(), contactGroupId);
 
         Configuration config = new Configuration();
         config.setToDefaults();
