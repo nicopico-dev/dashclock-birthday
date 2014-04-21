@@ -52,7 +52,7 @@
     <string name="pref_days_limit_title">
         Days limit
     </string>
-    <string name="pref_days_limit_default">
+    <string name="pref_days_limit_default" translatable="false">
         7
     </string>
     <!-- Today only -->
@@ -97,10 +97,10 @@
     </string>
 
     <!-- Contact group preference -->
-    <string name="pref_contact_group">
+    <string name="pref_contact_group" tools:ignore="MissingTranslation">
         Contact group
     </string>
-    <string name="pref_no_contact_group_selected">
+    <string name="pref_no_contact_group_selected" tools:ignore="MissingTranslation">
         — All contacts —
     </string>
 
