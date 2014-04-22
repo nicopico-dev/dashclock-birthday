@@ -38,6 +38,8 @@ import java.util.regex.PatternSyntaxException;
 
 import fr.nicopico.dashclock.birthday.SettingsActivity;
 
+import static android.database.CursorJoiner.Result.BOTH;
+
 /**
  * User: Nicolas PICON
  * Date: 24/08/13 - 18:58
@@ -89,6 +91,7 @@ public class BirthdayRetriever {
                 for (String s : cursorBirthdays.getColumnNames()) {
                     sb.append(s).append(';');
                 }
+                sb.append("in_group;");
                 sb.append("is_valid\n");
             }
 
@@ -100,21 +103,25 @@ public class BirthdayRetriever {
 
             for (CursorJoiner.Result joinerResult : joiner) {
                 switch (joinerResult) {
+                    case LEFT:
                     case BOTH:
                         birthday = buildBirthday(contentResolver, cursorBirthdays);
-                        if (birthday != null) result.add(birthday);
 
                         // DEBUG MODE
                         if (debugMode) {
                             for (int i = 0; i < nbColumns; i++) {
                                 sb.append(cursorBirthdays.getString(i)).append(';');
                             }
+                            sb.append(joinerResult == BOTH).append(';');
                             sb.append(birthday != null);
                             sb.append('\n');
                         }
+
+                        if (birthday != null && joinerResult == BOTH) {
+                            result.add(birthday);
+                        }
                         break;
 
-                    case LEFT:
                     case RIGHT:
                         // Nothing to do
                         break;
