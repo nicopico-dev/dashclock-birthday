@@ -97,8 +97,8 @@ public class BirthdayRetriever {
 
             cursorGroups = getGroupsCursor(contentResolver, contactGroupId, cursorBirthdays);
             CursorJoiner joiner = new CursorJoiner(
-                    cursorBirthdays, new String[] { ContactsContract.Data.CONTACT_ID },
-                    cursorGroups, new String[] { ContactsContract.Data.CONTACT_ID }
+                    cursorBirthdays, new String[] { ContactsContract.Data.LOOKUP_KEY },
+                    cursorGroups, new String[] { ContactsContract.Data.LOOKUP_KEY }
             );
 
             for (CursorJoiner.Result joinerResult : joiner) {
@@ -160,7 +160,9 @@ public class BirthdayRetriever {
                 ContactsContract.Data.CONTENT_URI,
                 new String[] {
                         ContactsContract.Data.CONTACT_ID,
-                        ContactsContract.CommonDataKinds.Event.START_DATE
+                        ContactsContract.CommonDataKinds.Event.START_DATE,
+                        ContactsContract.Data.LOOKUP_KEY
+
                 },
                 String.format(
                         "%s = ? and %s = '%s'",
@@ -171,12 +173,12 @@ public class BirthdayRetriever {
                 new String[] {
                         ContactsContract.CommonDataKinds.Event.CONTENT_ITEM_TYPE
                 },
-                ContactsContract.Data.CONTACT_ID
+                ContactsContract.Data.LOOKUP_KEY
         );
     }
 
     private Cursor getGroupsCursor(ContentResolver contentResolver, String contactGroupId, Cursor cursorBirthdays) {
-        String[] columns = { ContactsContract.Data.CONTACT_ID };
+        String[] columns = { ContactsContract.Data.LOOKUP_KEY };
 
         if (SettingsActivity.NO_CONTACT_GROUP_SELECTED.equals(contactGroupId)) {
             // Return an empty cursor
@@ -204,7 +206,7 @@ public class BirthdayRetriever {
                     columns,
                     selection,
                     selectionArgs,
-                    ContactsContract.Data.CONTACT_ID
+                    ContactsContract.Data.LOOKUP_KEY
             );
         }
 
