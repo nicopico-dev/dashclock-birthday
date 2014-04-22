@@ -6,7 +6,7 @@
     <EditTextPreference
         android:key="pref_days_limit"
         android:title="@string/pref_days_limit_title"
-        android:defaultValue="@integer/pref_days_limit_default"
+        android:defaultValue="@string/pref_days_limit_default"
         android:selectAllOnFocus="true"
         android:inputType="number"
         android:singleLine="true"
