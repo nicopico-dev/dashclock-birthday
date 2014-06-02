@@ -38,7 +38,7 @@ import java.util.regex.PatternSyntaxException;
 
 import fr.nicopico.dashclock.birthday.SettingsActivity;
 
-import static android.database.CursorJoiner.Result.BOTH;
+import static android.database.CursorJoiner.Result.*;
 
 /**
  * User: Nicolas PICON
@@ -95,7 +95,8 @@ public class BirthdayRetriever {
                 sb.append("is_valid\n");
             }
 
-            cursorGroups = getGroupsCursor(contentResolver, contactGroupId, cursorBirthdays);
+            boolean noGroupSelected = SettingsActivity.NO_CONTACT_GROUP_SELECTED.equals(contactGroupId);
+            cursorGroups = getGroupsCursor(contentResolver, contactGroupId, noGroupSelected);
             CursorJoiner joiner = new CursorJoiner(
                     cursorBirthdays, new String[] { ContactsContract.Data.LOOKUP_KEY },
                     cursorGroups, new String[] { ContactsContract.Data.LOOKUP_KEY }
@@ -117,7 +118,8 @@ public class BirthdayRetriever {
                             sb.append('\n');
                         }
 
-                        if (birthday != null && joinerResult == BOTH) {
+                        if (birthday != null 
+                            && (joinerResult == BOTH || (joinerResult == LEFT && noGroupSelected))) {
                             result.add(birthday);
                         }
                         break;
@@ -177,18 +179,12 @@ public class BirthdayRetriever {
         );
     }
 
-    private Cursor getGroupsCursor(ContentResolver contentResolver, String contactGroupId, Cursor cursorBirthdays) {
+    private Cursor getGroupsCursor(ContentResolver contentResolver, String contactGroupId, boolean noGroupSelected) {
         String[] columns = { ContactsContract.Data.LOOKUP_KEY };
 
-        if (SettingsActivity.NO_CONTACT_GROUP_SELECTED.equals(contactGroupId)) {
+        if (noGroupSelected) {
             // Return an empty cursor
-            MatrixCursor cursorGroups = new MatrixCursor(columns);
-            while (cursorBirthdays.moveToNext()) {
-                cursorGroups.addRow(new Long[] { cursorBirthdays.getLong(0) });
-            }
-            // Reinit birthday cursor
-            cursorBirthdays.moveToPosition(-1);
-            return cursorGroups;
+            return new MatrixCursor(columns);
         }
         else {
             String selection = String.format(
