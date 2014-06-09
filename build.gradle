@@ -1,9 +1,1 @@
-allprojects {
-    ext {
-        compileSdkVersion = 19
-        buildToolsVersion = '19.0.3'
-
-        dashclockApiVersion = '2.0.0'
-        jodaTimeVersion = '2.3'
-    }
-}
+// Top-level build file where you can add configuration options common to all sub-projects/modules.

@@ -6,29 +6,25 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.9.+'
+        classpath 'com.android.tools.build:gradle:0.12.2'
         //classpath 'com.jakewharton.paraphrase:paraphrase:1.0.0-SNAPSHOT'
     }
 }
 
-task wrapper(type: Wrapper) {
-    gradleVersion = '1.11'
-}
-
-apply plugin: 'android'
+apply plugin: 'com.android.application'
 //apply plugin: 'paraphrase'
 
 repositories {
     mavenCentral()
 }
 dependencies {
-    compile "com.google.android.apps.dashclock:dashclock-api:$dashclockApiVersion"
-    compile "joda-time:joda-time:$jodaTimeVersion"
+    compile 'com.google.android.apps.dashclock:dashclock-api:2.0.0'
+    compile 'joda-time:joda-time:2.3'
 }
 
 android {
-    compileSdkVersion project.ext.compileSdkVersion
-    buildToolsVersion project.ext.buildToolsVersion
+    compileSdkVersion 20
+    buildToolsVersion '20.0.0'
 
     defaultConfig {
         versionCode 9
