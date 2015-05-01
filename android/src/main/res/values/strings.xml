@@ -31,7 +31,7 @@
     </plurals>
 
     <!-- When is the contact birthday ? -->
-    <string name="when_days_format">
+    <string name="when_days_format" tools:ignore="PluralsCandidate">
         in <xliff:g id="how_many_days_until_birthday">%1$d</xliff:g> days
     </string>
     <!-- Special case when the birthday is today -->

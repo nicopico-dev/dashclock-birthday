@@ -44,7 +44,7 @@ import java.util.Locale;
 public class BirthdayService extends DashClockExtension {
 
     private static final String TAG = BirthdayService.class.getSimpleName();
-    public static final String DEFAULT_LANG = "en";
+    private static final String DEFAULT_LANG = "en";
 
     private BirthdayRetriever birthdayRetriever;
     private SharedPreferences sharedPreferences;

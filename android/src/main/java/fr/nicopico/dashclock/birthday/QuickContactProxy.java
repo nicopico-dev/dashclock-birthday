@@ -34,8 +34,7 @@ import android.view.Display;
 public class QuickContactProxy extends Activity {
 
     private static final String TAG = QuickContactProxy.class.getSimpleName();
-
-    public static final String EXTRA_CONTACT_ID = "EXTRA_CONTACT_ID";
+    private static final String EXTRA_CONTACT_ID = "EXTRA_CONTACT_ID";
 
     /**
      * Build an intent to display a QuickContact dialog

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="fr.nicopico.dashclock.birthday">
 
     <uses-permission android:name="android.permission.READ_CONTACTS"/>
@@ -29,7 +30,8 @@
             android:name=".SettingsActivity"
             android:logo="@drawable/ic_extension_white"
             android:label="@string/settings_title"
-            android:exported="true"/>
+            android:exported="true"
+            tools:ignore="ExportedPreferenceActivity"/>
 
         <activity
             android:name=".QuickContactProxy"
