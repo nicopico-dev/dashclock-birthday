@@ -158,14 +158,16 @@ public class BirthdayRetriever {
     }
 
     private Cursor getBirthdaysCursor(ContentResolver contentResolver) {
-        return contentResolver.query(
-                ContactsContract.Data.CONTENT_URI,
-                new String[] {
-                        ContactsContract.Data.CONTACT_ID,
-                        ContactsContract.CommonDataKinds.Event.START_DATE,
-                        ContactsContract.Data.LOOKUP_KEY
+        final String[] columns = {
+                ContactsContract.Data.CONTACT_ID,
+                ContactsContract.CommonDataKinds.Event.START_DATE,
+                ContactsContract.Data.LOOKUP_KEY
 
-                },
+        };
+
+        final Cursor birthdayCursor = contentResolver.query(
+                ContactsContract.Data.CONTENT_URI,
+                columns,
                 String.format(
                         "%s = ? and %s = '%s'",
                         ContactsContract.Data.MIMETYPE,
@@ -177,16 +179,21 @@ public class BirthdayRetriever {
                 },
                 ContactsContract.Data.LOOKUP_KEY
         );
+
+        if (birthdayCursor != null) {
+            return birthdayCursor;
+        }
+        else {
+            // Return an empty cursor instead of null
+            return new MatrixCursor(columns);
+        }
     }
 
     private Cursor getGroupsCursor(ContentResolver contentResolver, String contactGroupId, boolean noGroupSelected) {
-        String[] columns = { ContactsContract.Data.LOOKUP_KEY };
+        final String[] columns = { ContactsContract.Data.LOOKUP_KEY };
 
-        if (noGroupSelected) {
-            // Return an empty cursor
-            return new MatrixCursor(columns);
-        }
-        else {
+        Cursor groupCursor = null;
+        if (!noGroupSelected) {
             String selection = String.format(
                     "%s = ? and %s = ?",
                     ContactsContract.Data.MIMETYPE,
@@ -197,7 +204,7 @@ public class BirthdayRetriever {
                     contactGroupId
             };
 
-            return contentResolver.query(
+            groupCursor = contentResolver.query(
                     ContactsContract.Data.CONTENT_URI,
                     columns,
                     selection,
@@ -206,6 +213,13 @@ public class BirthdayRetriever {
             );
         }
 
+        if (groupCursor != null) {
+            return groupCursor;
+        }
+        else {
+            // Return an empty cursor instead of null
+            return new MatrixCursor(columns);
+        }
     }
 
     private Birthday buildBirthday(ContentResolver contentResolver, Cursor c) {
