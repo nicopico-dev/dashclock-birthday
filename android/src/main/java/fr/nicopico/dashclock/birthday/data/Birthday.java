@@ -32,8 +32,6 @@ public class Birthday implements Comparable<Birthday> {
     public final long contactId;
     public final String lookupKey;
     public final String displayName;
-    public String uriPhoto;
-    public String uriThumbnail;
 
     public MonthDay birthdayDate;
     public boolean unknownYear = true;
@@ -51,9 +49,7 @@ public class Birthday implements Comparable<Birthday> {
                 new String[] {
                         ContactsContract.Contacts.LOOKUP_KEY,
                         ContactsContract.Contacts.DISPLAY_NAME_PRIMARY,
-                        ContactsContract.Contacts.DISPLAY_NAME,
-                        ContactsContract.Contacts.PHOTO_URI,
-                        ContactsContract.Contacts.PHOTO_THUMBNAIL_URI
+                        ContactsContract.Contacts.DISPLAY_NAME
                 },
                 null, null, null
         );
@@ -62,8 +58,6 @@ public class Birthday implements Comparable<Birthday> {
             if (c != null && c.moveToFirst()) {
                 this.lookupKey = c.getString(0);
                 this.displayName = TextUtils.isEmpty(c.getString(1)) ? c.getString(2) : c.getString(1);
-                this.uriPhoto = c.getString(3);
-                this.uriThumbnail = c.getString(4);
             }
             else {
                 this.lookupKey = "0";
