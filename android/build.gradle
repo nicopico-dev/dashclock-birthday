@@ -6,7 +6,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.12.2'
+        classpath 'com.android.tools.build:gradle:1.2.2'
         //classpath 'com.jakewharton.paraphrase:paraphrase:1.0.0-SNAPSHOT'
     }
 }
@@ -28,7 +28,7 @@ android {
 
     defaultConfig {
         versionCode 9
-        versionName "1.5.1"
+        versionName '1.5.1'
         minSdkVersion 17
         targetSdkVersion 19
     }
@@ -53,7 +53,7 @@ android {
 
     buildTypes {
         release {
-            runProguard true
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt')
             proguardFiles 'proguard-project.txt'
             signingConfig signingConfigs.release
