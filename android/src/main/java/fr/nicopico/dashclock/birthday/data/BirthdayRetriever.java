@@ -37,6 +37,7 @@ import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
 import fr.nicopico.dashclock.birthday.SettingsActivity;
+import fr.nicopico.dashclock.birthday.BuildConfig;
 
 import static android.database.CursorJoiner.Result.*;
 
@@ -136,8 +137,8 @@ public class BirthdayRetriever {
                 Intent mailIntent = new Intent(Intent.ACTION_SEND);
                 mailIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 mailIntent.setType("message/rfc822");
-                mailIntent.putExtra(Intent.EXTRA_EMAIL, new String[] { "nicopico.dev@gmail.com" });
-                mailIntent.putExtra(Intent.EXTRA_SUBJECT, "[DashClock Birthday] DEBUG");
+                mailIntent.putExtra(Intent.EXTRA_EMAIL, new String[] { BuildConfig.DEBUG_MODE_RECIPIENT });
+                mailIntent.putExtra(Intent.EXTRA_SUBJECT, BuildConfig.DEBUG_MODE_SUBJECT);
                 mailIntent.putExtra(Intent.EXTRA_TEXT, sb.toString());
 
                 context.startActivity(mailIntent);

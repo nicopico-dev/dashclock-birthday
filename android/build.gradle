@@ -31,6 +31,9 @@ android {
         versionName '1.5.2'
         minSdkVersion 17
         targetSdkVersion 19
+
+        buildConfigField 'String', 'DEBUG_MODE_RECIPIENT', '"nicopico.dev@gmail.com"'
+        buildConfigField 'String', 'DEBUG_MODE_SUBJECT', '"[DashClock Birthday] DEBUG"'
     }
 
     productFlavors {
