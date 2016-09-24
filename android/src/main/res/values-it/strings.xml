@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources
+    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Application title - DO NOT TRANSLATE -->
+    <string name="app_name">
+        <xliff:g>DashClock Birthday Extension</xliff:g>
+    </string>
+
+    <!-- Displayed in DashClock Settings -->
+    <string name="extension_title">
+        Compleanni
+    </string>
+    <string name="extension_description">
+        Visualizza una notifica per i compleanni dei tuoi contatti
+    </string>
+    
+    <!-- Contact information -->
+    <string name="single_birthday_title_format">
+        Compleanno di <xliff:g id="contact_name">%1$s</xliff:g>
+    </string>
+    <!-- Age of the contact -->
+    <plurals name="age_format">
+        <item quantity="one">
+            <xliff:g id="contact_age">%1$s</xliff:g> anno
+        </item>
+        <item quantity="other">
+            <xliff:g id="contact_age">%1$s</xliff:g> anni
+        </item>
+    </plurals>
+
+    <!-- When is the contact birthday ? -->
+    <string name="when_days_format" tools:ignore="PluralsCandidate">
+        tra <xliff:g id="how_many_days_until_birthday">%1$d</xliff:g> giorni
+    </string>
+    <!-- Special case when the birthday is today -->
+    <string name="when_today_format">
+        oggi!
+    </string>
+    <!-- Special case when the birthday is tomorrow -->
+    <string name="when_tomorrow_format">
+        domani
+    </string>
+
+    <!-- General settings title -->
+    <string name="settings_title">
+        Impostazioni <xliff:g>DashClock Birthday</xliff:g>
+    </string>
+
+    <!-- Set the number of days we look for future birthday -->
+    <string name="pref_days_limit_title">
+        Limite giorni
+    </string>
+    <string name="pref_days_limit_default" translatable="false">
+        7
+    </string>
+    <!-- Today only -->
+    <string name="pref_days_limit_0_summary_format">
+        Notifiche compleanni di oggi
+    </string>
+    <plurals name="pref_days_limit_summary_format">
+        <!-- Today and tomorrow -->
+        <item quantity="one">
+            Notifiche compleanni di domani
+        </item>
+        <!-- N days in the future -->
+        <item quantity="other">
+            Compleanni dei prossimi <xliff:g id="days_limit">%1$d</xliff:g> giorni
+        </item>
+    </plurals>
+
+    <!-- Switch (ON/OFF): what happens when the user click on the extension -->
+    <string name="pref_show_quickcontact">
+        <xliff:g>QuickContact</xliff:g>
+    </string>
+    <!-- QuickContact enabled description -->
+    <string name="pref_show_quickcontact_on">
+        Mostra <xliff:g>QuickContact</xliff:g> al tocco
+    </string>
+    <!-- QuickContact disabled description -->
+    <string name="pref_show_quickcontact_off">
+        Mostra l\'applicazione Contatti al tocco
+    </string>
+
+    <!-- Switch (ON/OFF): disable localization -->
+    <string name="pref_disable_localization" tools:ignore="MissingTranslation">
+        Disabilita selezione automatica della lingua (sperimentale)
+    </string>
+    <!-- Localization is disabled -->
+    <string name="pref_disable_localization_on" tools:ignore="MissingTranslation">
+        Forza la lingua inglese
+    </string>
+    <!-- Localization is enabled -->
+    <string name="pref_disable_localization_off" tools:ignore="MissingTranslation">
+        Usa la lingua del sistema se disponibile
+    </string>
+
+    <!-- Contact group preference -->
+    <string name="pref_contact_group" tools:ignore="MissingTranslation">
+        Gruppi
+    </string>
+    <string name="pref_no_contact_group_selected" tools:ignore="MissingTranslation">
+        — Tutti i contatti —
+    </string>
+
+</resources>
